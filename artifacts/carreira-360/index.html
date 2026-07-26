@@ -12,5 +12,10 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      setInterval(() => {
+        fetch('/api/healthz').catch(() => {});
+      }, 600000);
+    </script>
   </body>
 </html>

@@ -22,4 +22,11 @@ app.listen(port, (err) => {
   }
 
   logger.info({ port }, "Server listening");
+
+  // Keep-alive: auto-ping every 10 minutes to prevent Render free tier sleep
+  if (process.env.NODE_ENV === "production") {
+    setInterval(() => {
+      fetch(`http://localhost:${port}/api/healthz`).catch(() => {});
+    }, 600_000);
+  }
 });
