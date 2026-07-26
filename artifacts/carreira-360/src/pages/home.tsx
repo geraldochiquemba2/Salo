@@ -82,29 +82,6 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.2 }} className="hidden lg:block">
-              <div className="relative">
-                <div className="bg-white/5 border-2 border-white/10 p-8 shadow-[12px_12px_0px_0px_rgba(249,115,22,0.3)]">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <span className="text-white/40 text-sm uppercase">Match Score</span>
-                  </div>
-                  <p className="font-display text-[8rem] text-[#FACC15] leading-none">92%</p>
-                  <p className="text-white/50 text-lg mt-2">compatibilidade</p>
-                  <div className="mt-6 flex items-center gap-2 text-[#F97316]">
-                    <Target size={20} />
-                    <span className="font-bold uppercase text-sm">Monitorização LinkedIn</span>
-                  </div>
-                </div>
-                <div className="absolute -bottom-6 -left-6 bg-[#F97316] px-6 py-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
-                  <div className="flex items-center gap-2">
-                    <Users size={20} className="text-white" />
-                    <span className="font-display text-white text-lg">Equipe colaborando</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
