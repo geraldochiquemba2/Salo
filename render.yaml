@@ -18,5 +18,7 @@ services:
         value: 10000
       - key: BASE_PATH
         value: /
+      - key: RENDER_EXTERNAL_URL
+        value: https://salo-4csx.onrender.com
     healthCheckPath: /api/healthz
     autoDeploy: true

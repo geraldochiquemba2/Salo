@@ -1,5 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import cron from "node-cron";
 
 const rawPort = process.env["PORT"];
 
@@ -23,10 +24,18 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
 
-  // Keep-alive: auto-ping every 10 minutes to prevent Render free tier sleep
+  // Keep Render alive: ping external URL every 10 minutes
   if (process.env.NODE_ENV === "production") {
-    setInterval(() => {
-      fetch(`http://localhost:${port}/api/healthz`).catch(() => {});
-    }, 600_000);
+    const RENDER_URL = process.env.RENDER_EXTERNAL_URL || "https://salo-4csx.onrender.com";
+    cron.schedule("*/10 * * * *", async () => {
+      try {
+        const res = await fetch(`${RENDER_URL}/api/healthz`);
+        const data = await res.json();
+        logger.info({ status: res.status, ok: data.ok }, "[KeepAlive] ping OK");
+      } catch (e: any) {
+        logger.warn({ error: e.message }, "[KeepAlive] ping failed");
+      }
+    });
+    logger.info({ url: RENDER_URL }, "[KeepAlive] auto-ping activo a cada 10 min");
   }
 });

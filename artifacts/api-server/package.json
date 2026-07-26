@@ -19,6 +19,7 @@
     "drizzle-orm": "catalog:",
     "express": "^5",
     "jsonwebtoken": "^9.0.2",
+    "node-cron": "^4.6.0",
     "pino": "^9",
     "pino-http": "^10"
   },
