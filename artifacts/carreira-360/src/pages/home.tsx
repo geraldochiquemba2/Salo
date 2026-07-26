@@ -54,17 +54,17 @@ export default function Home() {
         <div className="max-w-[1400px] w-full mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-              <h1 className="font-display text-[5rem] md:text-[7rem] lg:text-[8rem] leading-[0.85] uppercase mb-6">
+              <h1 className="font-display text-[2.5rem] sm:text-[5rem] md:text-[7rem] lg:text-[8rem] leading-[0.85] uppercase mb-6">
                 Conectando <span className="text-[#FACC15]">Talentos</span> e Oportunidades
               </h1>
-              <p className="text-2xl text-white/80 mb-10 max-w-xl leading-relaxed">
+              <p className="text-lg sm:text-2xl text-white/80 mb-10 max-w-xl leading-relaxed">
                 Monitoriza vagas em tempo real. Compara CVs com vagas reais, calcula match %, identifica skill gaps e recomenda cursos.
               </p>
-              <div className="flex flex-wrap gap-4 mb-12">
-                <Link href="/cadastro?role=candidate" className="bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] px-10 py-5 font-display text-2xl uppercase transition-colors shadow-[6px_6px_0px_0px_rgba(249,115,22,1)]">
+              <div className="flex flex-wrap gap-3 sm:gap-4 mb-12">
+                <Link href="/cadastro?role=candidate" className="bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] px-6 sm:px-10 py-3 sm:py-5 font-display text-lg sm:text-2xl uppercase transition-colors shadow-[6px_6px_0px_0px_rgba(249,115,22,1)]">
                   Sou Candidato
                 </Link>
-                <Link href="/cadastro?role=recruiter" className="border-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-white px-10 py-5 font-display text-2xl uppercase transition-colors">
+                <Link href="/cadastro?role=recruiter" className="border-2 border-[#F97316] text-[#F97316] hover:bg-[#F97316] hover:text-white px-6 sm:px-10 py-3 sm:py-5 font-display text-lg sm:text-2xl uppercase transition-colors">
                   Sou Recrutador
                 </Link>
               </div>
@@ -120,10 +120,10 @@ export default function Home() {
       </div>
 
       {/* COMO FUNCIONA */}
-      <section id="como-funciona" className="py-32 px-6">
+      <section id="como-funciona" className="py-16 sm:py-32 px-6">
         <div className="max-w-[1400px] mx-auto">
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
-            <h2 className="font-display text-[6rem] md:text-[8rem] uppercase leading-[0.85]">
+            <h2 className="font-display text-[3rem] sm:text-[6rem] md:text-[8rem] uppercase leading-[0.85]">
               Como <span className="text-[#FACC15]">Funciona</span>
             </h2>
           </motion.div>
@@ -161,14 +161,14 @@ export default function Home() {
       </section>
 
       {/* CANDIDATOS */}
-      <section id="candidatos" className="py-32 px-6 bg-[#F5F0E8] text-[#0A0A0A]">
+      <section id="candidatos" className="py-16 sm:py-32 px-6 bg-[#F5F0E8] text-[#0A0A0A]">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <h2 className="font-display text-[5rem] md:text-[7rem] uppercase leading-[0.85] mb-6">
+              <h2 className="font-display text-[2.5rem] sm:text-[5rem] md:text-[7rem] uppercase leading-[0.85] mb-6">
                 Para <span className="text-[#F97316]">Candidatos</span>
               </h2>
-              <p className="text-2xl text-[#0A0A0A]/60 mb-12 max-w-md">Seu CV encontra a vaga perfeita. Faz upload do teu CV e a plataforma faz o trabalho pesado.</p>
+              <p className="text-lg sm:text-2xl text-[#0A0A0A]/60 mb-12 max-w-md">Seu CV encontra a vaga perfeita. Faz upload do teu CV e a plataforma faz o trabalho pesado.</p>
 
               <div className="space-y-8">
                 {[
@@ -198,7 +198,7 @@ export default function Home() {
               <img
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
                 alt="Person at desk"
-                className="w-full h-[500px] object-cover border-2 border-[#0A0A0A] shadow-[12px_12px_0px_0px_rgba(249,115,22,0.5)]"
+                className="w-full h-[300px] sm:h-[500px] object-cover border-2 border-[#0A0A0A] shadow-[12px_12px_0px_0px_rgba(249,115,22,0.5)]"
               />
               <div className="absolute -bottom-6 -left-6 bg-[#0A0A0A] text-white p-6 shadow-[4px_4px_0px_0px_rgba(249,115,22,0.5)]">
                 <div className="flex items-center gap-3">
@@ -212,7 +212,7 @@ export default function Home() {
       </section>
 
       {/* RECRUTADORES */}
-      <section id="recrutadores" className="py-32 px-6 bg-[#0A0A0A]">
+      <section id="recrutadores" className="py-16 sm:py-32 px-6 bg-[#0A0A0A]">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
@@ -225,10 +225,10 @@ export default function Home() {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 lg:order-2">
-              <h2 className="font-display text-[5rem] md:text-[7rem] uppercase leading-[0.85] mb-6">
+              <h2 className="font-display text-[2.5rem] sm:text-[5rem] md:text-[7rem] uppercase leading-[0.85] mb-6">
                 Para <span className="text-[#FACC15]">Recrutadores</span>
               </h2>
-              <p className="text-2xl text-white/60 mb-12 max-w-md">Encontre o talento certo. Descreve o perfil em linguagem natural e recebe um ranking de candidatos.</p>
+              <p className="text-lg sm:text-2xl text-white/60 mb-12 max-w-md">Encontre o talento certo. Descreve o perfil em linguagem natural e recebe um ranking de candidatos.</p>
 
               <div className="space-y-8">
                 {[

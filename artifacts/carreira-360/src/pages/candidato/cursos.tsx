@@ -15,7 +15,7 @@ export default function CandidatoCursos() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
       <div className="max-w-[1400px] mx-auto">
-        <h1 className="font-display text-6xl md:text-8xl text-white uppercase mb-12">
+        <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
           Cursos <span className="text-[#FACC15]">Recomendados</span>
         </h1>
 
@@ -28,12 +28,12 @@ export default function CandidatoCursos() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((c: any) => (
               <a key={c.id} href={c.url} target="_blank" rel="noopener"
-                className="block bg-white/5 border-2 border-white/10 p-8 hover:border-[#FACC15] transition-colors group">
+                className="block bg-white/5 border-2 border-white/10 p-4 sm:p-8 hover:border-[#FACC15] transition-colors group">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs border border-[#FACC15] text-[#FACC15] px-3 py-1 uppercase font-bold">{c.skill}</span>
                   {c.free ? <span className="text-xs bg-green-500 text-white px-3 py-1 uppercase font-bold">GRATUITO</span> : null}
                 </div>
-                <h3 className="font-display text-3xl text-white group-hover:text-[#FACC15] uppercase mb-2">{c.title}</h3>
+                <h3 className="font-display text-xl sm:text-3xl text-white group-hover:text-[#FACC15] uppercase mb-2">{c.title}</h3>
                 <p className="text-[#F97316] font-bold uppercase text-sm mb-4">{c.provider}</p>
                 <div className="flex items-center gap-4 text-white/50 text-sm">
                   <span className="flex items-center gap-1"><Clock size={14} /> {c.duration || "N/A"}</span>

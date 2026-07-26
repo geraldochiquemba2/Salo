@@ -51,14 +51,14 @@ export default function CandidatoCarta() {
     } catch {}
   }
 
-  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-6 py-4 text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
+  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-4 sm:px-6 py-4 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
   const labelClass = "block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3";
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
       <div className="max-w-[1000px] mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <h1 className="font-display text-6xl md:text-8xl text-white uppercase">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-12">
+          <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase">
             Carta de <span className="text-[#FACC15]">Motivação</span>
           </h1>
           <button onClick={() => setShowForm(!showForm)}
@@ -68,7 +68,7 @@ export default function CandidatoCarta() {
         </div>
 
         {showForm && (
-          <div className="bg-white/5 border-2 border-[#FACC15] p-8 mb-12 shadow-[8px_8px_0px_0px_rgba(249,115,22,0.5)]">
+          <div className="bg-white/5 border-2 border-[#FACC15] p-4 sm:p-8 mb-12 shadow-[8px_8px_0px_0px_rgba(249,115,22,0.5)]">
             <h2 className="font-display text-3xl text-[#FACC15] uppercase mb-6">Gerar com IA</h2>
             <form onSubmit={handleGenerate} className="space-y-6 mb-8">
               <div className="grid md:grid-cols-2 gap-6">
@@ -93,7 +93,7 @@ export default function CandidatoCarta() {
               <form onSubmit={handleSave} className="space-y-6 border-t border-white/10 pt-8">
                 <div><label className={labelClass}>TÍTULO</label><input value={form.title} onChange={e => setForm({...form, title: e.target.value})} className={inputClass} /></div>
                 <div><label className={labelClass}>CONTEÚDO</label><textarea value={form.content} onChange={e => setForm({...form, content: e.target.value})} rows={12} className={`${inputClass} resize-none`} /></div>
-                <button type="submit" className="w-full h-16 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-xl font-display uppercase transition-colors shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">GUARDAR CARTA</button>
+                <button type="submit" className="w-full h-12 sm:h-16 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-xl font-display uppercase transition-colors shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">GUARDAR CARTA</button>
               </form>
             )}
           </div>
@@ -104,7 +104,7 @@ export default function CandidatoCarta() {
         ) : (
           <div className="space-y-6">
             {letters.map((l: any) => (
-              <div key={l.id} className="bg-white/5 border-2 border-white/10 p-8 hover:border-[#FACC15] transition-colors">
+              <div key={l.id} className="bg-white/5 border-2 border-white/10 p-4 sm:p-8 hover:border-[#FACC15] transition-colors">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="font-display text-3xl text-white uppercase">{l.title}</h3>

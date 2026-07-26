@@ -68,12 +68,12 @@ export default function Empresas() {
 
       {/* Hero */}
       <section className="relative pt-24">
-        <div className="relative h-[500px] overflow-hidden">
+        <div className="relative h-[300px] sm:h-[500px] overflow-hidden">
           <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80" alt="Modern office" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
           <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 px-6">
             <p className="text-[#FACC15] uppercase tracking-[0.3em] font-bold text-sm mb-4">Para Empresas</p>
-            <h1 className="text-5xl md:text-7xl font-black text-center leading-[0.9] mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-center leading-[0.9] mb-6">
               Encontre os Melhores<br /><span className="text-[#FACC15]">Talentos de Angola</span>
             </h1>
             <a href="#pricing" className="bg-[#F97316] text-[#F5F0E8] px-10 py-4 font-black uppercase tracking-wider text-lg hover:bg-[#FACC15] hover:text-[#0A0A0A] transition-colors">Começar Agora</a>
@@ -118,7 +118,7 @@ export default function Empresas() {
                 <div className="p-8">
                   <h3 className="text-2xl font-black text-[#FACC15] uppercase mb-4">{plan.name}</h3>
                   <div className="mb-6">
-                    <span className="text-4xl font-black">{plan.price}</span>
+                    <span className="text-3xl sm:text-4xl font-black">{plan.price}</span>
                     <span className="text-[#F5F0E8]/60 ml-2">{plan.period}</span>
                   </div>
                   <ul className="space-y-3 mb-8">
@@ -142,7 +142,7 @@ export default function Empresas() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-black text-[#0A0A0A] mb-6 leading-tight">Pronto para encontrar<br />os melhores talentos?</h2>
           <p className="text-[#0A0A0A]/70 text-lg mb-10 max-w-xl mx-auto">Junte-se a centenas de empresas que já usam o SALO para contratar profissionais excepcionais.</p>
-          <Link href="/cadastro" className="inline-block bg-[#0A0A0A] text-[#FACC15] px-12 py-5 font-black uppercase tracking-wider text-lg hover:bg-[#F97316] hover:text-[#F5F0E8] transition-colors">Começar Agora</Link>
+          <Link href="/cadastro" className="inline-block bg-[#0A0A0A] text-[#FACC15] px-6 sm:px-12 py-3 sm:py-5 font-black uppercase tracking-wider text-base sm:text-lg hover:bg-[#F97316] hover:text-[#F5F0E8] transition-colors">Começar Agora</Link>
         </div>
       </section>
 

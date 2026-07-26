@@ -46,7 +46,7 @@ export default function CandidatoCv() {
     }
   }
 
-  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-6 py-4 text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
+  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-4 sm:px-6 py-4 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
   const labelClass = "block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3";
 
   if (loading) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><p className="font-display text-4xl text-[#FACC15] animate-pulse">A CARREGAR...</p></div>;
@@ -56,7 +56,7 @@ export default function CandidatoCv() {
       <div className="max-w-[800px] mx-auto">
         <div className="flex items-center gap-4 mb-12">
           {hasCv ? <FileText size={48} className="text-[#FACC15]" /> : <Upload size={48} className="text-[#F97316]" />}
-          <h1 className="font-display text-6xl md:text-8xl text-white uppercase">
+          <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase">
             {hasCv ? "Meu " : "Upload "}<span className="text-[#FACC15]">CV</span>
           </h1>
         </div>
@@ -87,7 +87,7 @@ export default function CandidatoCv() {
             <textarea value={form.summary} onChange={e => setForm({...form, summary: e.target.value})} rows={3} placeholder="Um breve resumo do teu perfil..." className={`${inputClass} resize-none`} />
           </div>
           <button type="submit" disabled={saving}
-            className="w-full h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+            className="w-full h-14 sm:h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
             {saving ? "A GUARDAR..." : hasCv ? "ATUALIZAR CV" : "GUARDAR CV"}
           </button>
         </form>

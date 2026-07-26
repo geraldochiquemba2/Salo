@@ -48,7 +48,7 @@ export default function CandidatoPerfil() {
     }
   }
 
-  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-6 py-4 text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
+  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-4 sm:px-6 py-4 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
   const labelClass = "block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3";
 
   if (loading) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><p className="font-display text-4xl text-[#FACC15] animate-pulse">A CARREGAR...</p></div>;
@@ -56,7 +56,7 @@ export default function CandidatoPerfil() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
       <div className="max-w-[800px] mx-auto">
-        <h1 className="font-display text-6xl md:text-8xl text-white uppercase mb-12">
+        <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
           Meu <span className="text-[#FACC15]">Perfil</span>
         </h1>
         <form onSubmit={handleSave} className="space-y-8">
@@ -99,7 +99,7 @@ export default function CandidatoPerfil() {
             <textarea value={form.education} onChange={e => setForm({...form, education: e.target.value})} rows={3} placeholder="Licenciatura - Universidade Agostinho Neto (2022)" className={`${inputClass} resize-none`} />
           </div>
           <button type="submit" disabled={saving}
-            className="w-full h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+            className="w-full h-14 sm:h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
             {saving ? "A GUARDAR..." : "GUARDAR PERFIL"}
           </button>
         </form>

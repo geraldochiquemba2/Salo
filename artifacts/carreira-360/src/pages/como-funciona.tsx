@@ -84,12 +84,12 @@ export default function ComoFunciona() {
 
       {/* Hero */}
       <section className="relative pt-24">
-        <div className="relative h-[500px] overflow-hidden">
+        <div className="relative h-[300px] sm:h-[500px] overflow-hidden">
           <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=80" alt="Team collaboration" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
           <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 px-6">
             <p className="text-[#FACC15] uppercase tracking-[0.3em] font-bold text-sm mb-4">Como Funciona</p>
-            <h1 className="text-5xl md:text-7xl font-black text-center leading-[0.9] mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-center leading-[0.9] mb-6">
               Seu Caminho para a<br /><span className="text-[#FACC15]">Próxima Carreira</span>
             </h1>
             <p className="text-[#F5F0E8]/70 text-lg max-w-xl text-center mb-8">Em 5 passos simples, do perfil à contratação.</p>
@@ -126,18 +126,20 @@ export default function ComoFunciona() {
           <p className="text-[#F97316] uppercase tracking-[0.3em] font-bold text-sm mb-4">Comparação</p>
           <h2 className="text-4xl md:text-5xl font-black mb-16 leading-tight">SALO vs<br /><span className="text-[#FACC15]">Método Tradicional</span></h2>
           <div className="border-2 border-[#FACC15]/30 overflow-hidden">
-            <div className="grid grid-cols-3 bg-[#FACC15]/10 border-b-2 border-[#FACC15]/30">
-              <div className="p-4 font-black text-[#FACC15] uppercase text-sm">Funcionalidade</div>
-              <div className="p-4 font-black text-[#F5F0E8]/60 uppercase text-sm text-center">Tradicional</div>
-              <div className="p-4 font-black text-[#FACC15] uppercase text-sm text-center">SALO</div>
-            </div>
-            {comparisons.map((row, i) => (
-              <div key={i} className={`grid grid-cols-3 ${i % 2 === 0 ? 'bg-[#0A0A0A]' : 'bg-[#FACC15]/5'} border-b border-[#FACC15]/10`}>
-                <div className="p-4 text-[#F5F0E8]/80 font-medium">{row.feature}</div>
-                <div className="p-4 text-[#F5F0E8]/50 text-center">{row.traditional}</div>
-                <div className="p-4 text-[#FACC15] font-bold text-center">{row.salo}</div>
+            <div className="overflow-x-auto">
+              <div className="grid grid-cols-3 min-w-[600px] bg-[#FACC15]/10 border-b-2 border-[#FACC15]/30">
+                <div className="p-4 font-black text-[#FACC15] uppercase text-sm">Funcionalidade</div>
+                <div className="p-4 font-black text-[#F5F0E8]/60 uppercase text-sm text-center">Tradicional</div>
+                <div className="p-4 font-black text-[#FACC15] uppercase text-sm text-center">SALO</div>
               </div>
-            ))}
+              {comparisons.map((row, i) => (
+                <div key={i} className={`grid grid-cols-3 min-w-[600px] ${i % 2 === 0 ? 'bg-[#0A0A0A]' : 'bg-[#FACC15]/5'} border-b border-[#FACC15]/10`}>
+                  <div className="p-4 text-[#F5F0E8]/80 font-medium">{row.feature}</div>
+                  <div className="p-4 text-[#F5F0E8]/50 text-center">{row.traditional}</div>
+                  <div className="p-4 text-[#FACC15] font-bold text-center">{row.salo}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -169,12 +171,12 @@ export default function ComoFunciona() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-[#FACC15]">
+      <section className="py-12 sm:py-24 px-4 sm:px-6 bg-[#FACC15]">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
           <div className="flex-1">
             <h2 className="text-4xl md:text-5xl font-black text-[#0A0A0A] mb-6 leading-tight">Pronto para<br />começar?</h2>
             <p className="text-[#0A0A0A]/70 text-lg mb-8 max-w-md">Crie seu perfil agora e dê o primeiro passo para sua próxima oportunidade profissional.</p>
-            <Link href="/cadastro" className="inline-block bg-[#0A0A0A] text-[#FACC15] px-12 py-5 font-black uppercase tracking-wider text-lg hover:bg-[#F97316] hover:text-[#F5F0E8] transition-colors">Começar Agora</Link>
+            <Link href="/cadastro" className="inline-block bg-[#0A0A0A] text-[#FACC15] px-6 sm:px-12 py-3 sm:py-5 font-black uppercase tracking-wider text-base sm:text-lg hover:bg-[#F97316] hover:text-[#F5F0E8] transition-colors">Começar Agora</Link>
           </div>
           <div className="w-full md:w-96 h-72 overflow-hidden border-4 border-[#0A0A0A]">
             <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=800&q=80" alt="CTA" className="w-full h-full object-cover" />

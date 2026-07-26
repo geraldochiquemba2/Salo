@@ -49,7 +49,7 @@ export default function CandidatoSwipe() {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12 flex flex-col items-center">
-      <h1 className="font-display text-6xl md:text-8xl text-white uppercase mb-8 self-start max-w-[1400px] w-full mx-auto">
+      <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-8 self-start max-w-[1400px] w-full mx-auto">
         Swipe <span className="text-[#FACC15]">Vagas</span>
       </h1>
 
@@ -61,13 +61,13 @@ export default function CandidatoSwipe() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, x: 200 }}
             transition={{ duration: 0.3 }}
-            className="bg-white/5 border-2 border-white/10 p-8 shadow-[8px_8px_0px_0px_rgba(249,115,22,0.5)]"
+            className="bg-white/5 border-2 border-white/10 p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(249,115,22,0.5)]"
           >
             <div className="flex items-center gap-3 mb-6">
               <Briefcase size={24} className="text-[#FACC15]" />
               <span className="text-white/40 text-sm uppercase">{currentJob.company}</span>
             </div>
-            <h2 className="font-display text-5xl text-white uppercase mb-4">{currentJob.title}</h2>
+            <h2 className="font-display text-3xl sm:text-5xl text-white uppercase mb-4">{currentJob.title}</h2>
             <div className="flex items-center gap-2 text-white/50 mb-4">
               <MapPin size={16} /> {currentJob.location}
             </div>

@@ -54,7 +54,7 @@ export default function Vagas() {
             <div className="inline-flex items-center gap-2 bg-[#FACC15]/10 border border-[#FACC15]/30 text-[#FACC15] px-4 py-2 font-bold text-sm uppercase tracking-wider mb-4">
               <Briefcase size={16} /> {allJobs.length} oportunidades activas
             </div>
-            <h1 className="font-display text-[3rem] md:text-[6rem] uppercase leading-[0.85] mb-4">
+            <h1 className="font-display text-[2rem] sm:text-[3rem] md:text-[6rem] uppercase leading-[0.85] mb-4">
               As Melhores<br /><span className="text-[#FACC15]">Vagas</span> de Angola.
             </h1>
           </div>
@@ -129,14 +129,14 @@ export default function Vagas() {
           </div>
 
           {/* RECRUITER CTA */}
-          <section className="bg-white/5 border-2 border-white/10 p-12 md:p-16 text-center shadow-[12px_12px_0px_0px_rgba(249,115,22,0.3)]">
-            <h2 className="font-display text-[4rem] md:text-[5rem] uppercase leading-[0.85] mb-4">
+          <section className="bg-white/5 border-2 border-white/10 p-6 sm:p-12 md:p-16 text-center shadow-[12px_12px_0px_0px_rgba(249,115,22,0.3)]">
+            <h2 className="font-display text-[2.5rem] sm:text-[4rem] md:text-[5rem] uppercase leading-[0.85] mb-4">
               Para <span className="text-[#FACC15]">Recrutadores</span>
             </h2>
-            <p className="font-display text-3xl text-white/40 uppercase mb-2">Publique a Sua Vaga.</p>
-            <p className="font-display text-3xl text-[#F97316] uppercase mb-8">Encontre o Talento Certo.</p>
+            <p className="font-display text-xl sm:text-3xl text-white/40 uppercase mb-2">Publique a Sua Vaga.</p>
+            <p className="font-display text-xl sm:text-3xl text-[#F97316] uppercase mb-8">Encontre o Talento Certo.</p>
             <p className="text-white/50 text-lg mb-10 max-w-lg mx-auto">Acesso imediato à maior rede de talentos qualificados de Angola.</p>
-            <Link href="/cadastro" className="inline-flex items-center gap-3 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] px-12 py-5 font-display text-2xl uppercase transition-colors shadow-[6px_6px_0px_0px_rgba(249,115,22,1)]">
+            <Link href="/cadastro" className="inline-flex items-center gap-3 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] px-6 sm:px-12 py-3 sm:py-5 font-display text-lg sm:text-2xl uppercase transition-colors shadow-[6px_6px_0px_0px_rgba(249,115,22,1)]">
               Saber Mais <ChevronRight size={24} />
             </Link>
           </section>

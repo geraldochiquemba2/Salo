@@ -43,23 +43,23 @@ export default function Cadastro() {
         <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#FACC15] transition-colors mb-8 font-bold text-sm uppercase tracking-wider">
           ← Voltar
         </Link>
-        <Link href="/" className="font-display text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
-        <h1 className="font-display text-6xl text-white text-center mb-12 uppercase">Criar Conta</h1>
+        <Link href="/" className="font-display text-4xl sm:text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
+        <h1 className="font-display text-4xl sm:text-6xl text-white text-center mb-12 uppercase">Criar Conta</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Nome</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)} required
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-16 px-6 text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="O teu nome" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="O teu nome" />
           </div>
           <div>
             <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">E-mail</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-16 px-6 text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="teu@email.com" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="teu@email.com" />
           </div>
           <div>
             <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Senha</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-16 px-6 text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="Mínimo 6 caracteres" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="Mínimo 6 caracteres" />
           </div>
           <div>
             <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Eu sou</label>
@@ -75,7 +75,7 @@ export default function Cadastro() {
             </div>
           </div>
           <button type="submit" disabled={loading}
-            className="w-full h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+            className="w-full h-14 sm:h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
             {loading ? "A criar..." : "Criar Conta"}
           </button>
         </form>

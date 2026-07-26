@@ -29,7 +29,7 @@ export default function CandidatoDashboard() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
       <div className="max-w-[1400px] mx-auto">
-        <h1 className="font-display text-6xl md:text-8xl text-white uppercase mb-12">
+        <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
           Meu <span className="text-[#FACC15]">Painel</span>
         </h1>
 
@@ -38,7 +38,7 @@ export default function CandidatoDashboard() {
             const Icon = card.icon;
             return (
               <Link key={card.label} href={card.href}
-                className="block bg-white/5 border-2 border-white/10 p-8 hover:border-[#FACC15] transition-colors group shadow-[8px_8px_0px_0px_rgba(249,115,22,0.3)]">
+                className="block bg-white/5 border-2 border-white/10 p-4 sm:p-8 hover:border-[#FACC15] transition-colors group shadow-[8px_8px_0px_0px_rgba(249,115,22,0.3)]">
                 <Icon size={32} className="text-[#FACC15] mb-4" />
                 <p className="font-display text-5xl text-white group-hover:text-[#FACC15] transition-colors">{card.value}</p>
                 <p className="font-bold text-sm text-white/50 uppercase tracking-widest mt-2">{card.label}</p>
@@ -53,7 +53,7 @@ export default function CandidatoDashboard() {
             const Icon = action.icon;
             return (
               <Link key={action.href} href={action.href}
-                className="flex flex-col items-center gap-4 bg-[#FACC15] text-[#0A0A0A] p-8 hover:bg-[#F97316] hover:text-white transition-colors shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+                className="flex flex-col items-center gap-4 bg-[#FACC15] text-[#0A0A0A] p-4 sm:p-8 hover:bg-[#F97316] hover:text-white transition-colors shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
                 <Icon size={36} />
                 <span className="font-display text-xl uppercase">{action.label}</span>
               </Link>

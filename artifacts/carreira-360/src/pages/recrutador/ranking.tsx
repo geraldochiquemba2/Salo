@@ -15,7 +15,7 @@ export default function RecrutadorRanking() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
       <div className="max-w-[1400px] mx-auto">
-        <h1 className="font-display text-6xl md:text-8xl text-white uppercase mb-12">
+        <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
           Ranking de <span className="text-[#F97316]">Candidatos</span>
         </h1>
 
@@ -28,18 +28,18 @@ export default function RecrutadorRanking() {
         ) : (
           <div className="space-y-4">
             {candidates.sort((a: any, b: any) => b.matchScore - a.matchScore).map((c: any, i: number) => (
-              <div key={c.id} className="bg-white/5 border-2 border-white/10 p-6 flex items-center gap-6 hover:border-[#F97316] transition-colors">
-                <span className="font-display text-5xl text-[#F97316] w-16 text-center">{String(i + 1).padStart(2, "0")}</span>
+              <div key={c.id} className="bg-white/5 border-2 border-white/10 p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 hover:border-[#F97316] transition-colors">
+                <span className="font-display text-3xl sm:text-5xl text-[#F97316] w-12 sm:w-16 text-center">{String(i + 1).padStart(2, "0")}</span>
                 <div className="w-16 h-16 bg-[#F97316] flex items-center justify-center shrink-0">
                   {c.avatarUrl ? <img src={c.avatarUrl} alt="" className="w-full h-full object-cover" /> : <Users size={24} className="text-white" />}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-3xl text-white uppercase truncate">{c.name}</h3>
+                  <h3 className="font-display text-xl sm:text-3xl text-white uppercase truncate">{c.name}</h3>
                   <p className="text-[#FACC15] font-bold text-sm uppercase">{c.title}</p>
                   <div className="flex items-center gap-2 text-white/40 text-sm mt-1"><MapPin size={12} /> {c.location}</div>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="font-display text-5xl text-[#F97316]">{c.matchScore}%</p>
+                  <p className="font-display text-3xl sm:text-5xl text-[#F97316]">{c.matchScore}%</p>
                   <div className="flex items-center gap-1 text-[#FACC15] text-sm"><Star size={12} /> Match</div>
                 </div>
                 <div className="hidden md:flex flex-wrap gap-2 max-w-[300px]">

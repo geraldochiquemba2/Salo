@@ -23,8 +23,8 @@ export default function CandidatoNotificacoes() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
       <div className="max-w-[800px] mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <h1 className="font-display text-6xl md:text-8xl text-white uppercase">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-12">
+          <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase">
             Notificações {unread > 0 && <span className="text-[#F97316]">({unread})</span>}
           </h1>
           {unread > 0 && (
@@ -45,7 +45,7 @@ export default function CandidatoNotificacoes() {
               <div key={n.id} className={`border-2 p-6 flex items-start gap-4 transition-colors ${n.read ? "bg-white/5 border-white/10" : "bg-[#FACC15]/5 border-[#FACC15]"}`}>
                 <div className={`w-3 h-3 rounded-full mt-2 shrink-0 ${n.read ? "bg-white/20" : "bg-[#FACC15]"}`} />
                 <div className="flex-1">
-                  <h3 className="font-display text-2xl text-white uppercase">{n.title}</h3>
+                  <h3 className="font-display text-lg sm:text-2xl text-white uppercase">{n.title}</h3>
                   <p className="text-white/60 mt-1">{n.message}</p>
                   <p className="text-white/30 text-xs mt-2">{new Date(n.createdAt).toLocaleDateString("pt-AO")}</p>
                 </div>
