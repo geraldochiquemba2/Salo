@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Carreira 360°"
+title = "SALO"
 version = "1.0.0"
 id = "artifacts/carreira-360"
 router = "path"
