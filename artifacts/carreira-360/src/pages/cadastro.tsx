@@ -30,8 +30,19 @@ export default function Cadastro() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=80"
+          alt="Cadastro background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+      </div>
+      <div className="w-full max-w-md relative z-10">
+        <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#FACC15] transition-colors mb-8 font-bold text-sm uppercase tracking-wider">
+          ← Voltar
+        </Link>
         <Link href="/" className="font-display text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
         <h1 className="font-display text-6xl text-white text-center mb-12 uppercase">Criar Conta</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
