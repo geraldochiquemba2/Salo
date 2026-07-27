@@ -16,6 +16,18 @@ export default function Cadastro() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!name.trim()) {
+      toast({ title: "ERRO", description: "Nome obrigatório", variant: "destructive" });
+      return;
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast({ title: "ERRO", description: "Email inválido", variant: "destructive" });
+      return;
+    }
+    if (!password || password.length < 6) {
+      toast({ title: "ERRO", description: "Senha deve ter no mínimo 6 caracteres", variant: "destructive" });
+      return;
+    }
     setLoading(true);
     try {
       const user = await register(email, password, name, role);
@@ -45,7 +57,7 @@ export default function Cadastro() {
         </Link>
         <Link href="/" className="font-display text-4xl sm:text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
         <h1 className="font-display text-4xl sm:text-6xl text-white text-center mb-12 uppercase">Criar Conta</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} noValidate className="space-y-6">
           <div>
             <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Nome</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)} required

@@ -14,6 +14,14 @@ export default function Login() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast({ title: "ERRO", description: "Email inválido", variant: "destructive" });
+      return;
+    }
+    if (!password) {
+      toast({ title: "ERRO", description: "Senha obrigatória", variant: "destructive" });
+      return;
+    }
     setLoading(true);
     try {
       const user = await login(email, password);
@@ -43,7 +51,7 @@ export default function Login() {
         </Link>
         <Link href="/" className="font-display text-4xl sm:text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
         <h1 className="font-display text-4xl sm:text-6xl text-white text-center mb-12 uppercase">Entrar</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} noValidate className="space-y-6">
           <div>
             <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">E-mail</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required

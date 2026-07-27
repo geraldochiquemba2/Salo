@@ -35,7 +35,9 @@ export async function apiFetch(path: string, options: RequestInit = {}): Promise
   if (token) headers["Authorization"] = `Bearer ${token}`;
   
   const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
-  const data = await res.json();
+  const text = await res.text();
+  let data: any;
+  try { data = JSON.parse(text); } catch { data = { error: text || "Erro de conexão com o servidor" }; }
   if (!res.ok) throw new Error(data.error || "Erro na requisição");
   return data;
 }
