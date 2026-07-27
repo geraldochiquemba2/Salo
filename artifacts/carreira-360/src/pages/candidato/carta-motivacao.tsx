@@ -55,7 +55,12 @@ export default function CandidatoCarta() {
   const labelClass = "block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3";
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
+    <div className="min-h-screen relative">
+      <div className="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+      </div>
+      <div className="relative z-10 p-6 md:p-12">
       <div className="max-w-[1000px] mx-auto">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-12">
           <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase">
@@ -119,6 +124,7 @@ export default function CandidatoCarta() {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }

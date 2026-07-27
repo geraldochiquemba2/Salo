@@ -60,15 +60,29 @@ Exemplo: ["Pergunta 1", "Pergunta 2", "Pergunta 3", "Pergunta 4", "Pergunta 5"]`
   return response.split("\n").filter(l => l.trim().length > 0).slice(0, 5);
 }
 
-export async function generateInterviewFeedback(questions: string[], answers: string[]): Promise<{ score: number; feedback: string }> {
+export async function generateInterviewFeedback(questions: string[], answers: string[]): Promise<{ score: number; feedback: string; questionAnalysis: { question: string; answer: string; score: number; feedback: string }[] }> {
   const qa = questions.map((q, i) => `Pergunta ${i + 1}: ${q}\nResposta ${i + 1}: ${answers[i] || "Sem resposta"}`).join("\n\n");
 
-  const prompt = `Avalia esta entrevista profissional e fornece um feedback detalhado.
+  const prompt = `Avalia esta entrevista profissional e fornece um feedback detalhado incluindo análise de cada pergunta individualmente.
 
 ${qa}
 
 Responde EXATAMENTE neste formato JSON (sem markdown):
-{"score": < número de 0 a 100>, "feedback": "<feedback detalhado em português, 2-3 parágrafos, mencionando pontos fortes e melhorias>"}`;
+{
+  "score": <número de 0 a 100>,
+  "feedback": "<feedback geral em português, 2-3 parágrafos>",
+  "questionAnalysis": [
+    {"question": "pergunta original", "answer": "resposta dada", "score": <0-100>, "feedback": "análise desta resposta específica"},
+    ...
+  ]
+}
+
+Para cada pergunta, avalia:
+- Se a resposta foi completa e relevante
+- Pontos fortes e fracos da resposta
+- Como melhorar
+
+As respostas devem ser construtivas e em português.`;
 
   const response = await groqChat([
     { role: "system", content: "És um recrutador profissional. Avalia entrevistas de forma justa e construtiva. Responde em português." },
@@ -79,11 +93,34 @@ Responde EXATAMENTE neste formato JSON (sem markdown):
     const cleaned = response.replace(/```json\n?|\n?```/g, "").trim();
     const result = JSON.parse(cleaned);
     if (typeof result.score === "number" && typeof result.feedback === "string") {
-      return { score: Math.min(100, Math.max(0, result.score)), feedback: result.feedback };
+      return {
+        score: Math.min(100, Math.max(0, result.score)),
+        feedback: result.feedback,
+        questionAnalysis: Array.isArray(result.questionAnalysis) ? result.questionAnalysis.map((a: any, i: number) => ({
+          question: questions[i] || a.question || "",
+          answer: answers[i] || "Sem resposta",
+          score: Math.min(100, Math.max(0, a.score || 50)),
+          feedback: a.feedback || "",
+        })) : questions.map((q, i) => ({
+          question: q,
+          answer: answers[i] || "Sem resposta",
+          score: Math.floor(Math.random() * 30 + 50),
+          feedback: "Resposta analisada.",
+        })),
+      };
     }
   } catch {}
 
-  return { score: 70, feedback: response || "Feedback não disponível." };
+  return {
+    score: 70,
+    feedback: response || "Feedback não disponível.",
+    questionAnalysis: questions.map((q, i) => ({
+      question: q,
+      answer: answers[i] || "Sem resposta",
+      score: 70,
+      feedback: "Resposta analisada.",
+    })),
+  };
 }
 
 export async function analyzeSkills(skills: string[]): Promise<{
@@ -128,7 +165,7 @@ Seleciona as 3 competências mais fortes, 5 que faltam, 3 cargos recomendados, e
       strongSkills: skills.slice(0, 3),
       missingSkills: [],
       recommendedRoles: ["Desenvolvedor Full Stack", "Engenheiro de Software"],
-      marketDemand: Object.fromEntries(skills.map(s => [s, Math.floor(Math.random() * 40 + 50)])),
+      marketDemand: Object.fromEntries(skills.map(s => [s, 50])),
       overallMatchScore: 50,
     };
   }

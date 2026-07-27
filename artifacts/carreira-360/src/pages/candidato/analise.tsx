@@ -15,7 +15,12 @@ export default function CandidatoAnalise() {
   if (!analysis) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><p className="font-display text-3xl text-white/40">Faz upload do teu CV primeiro</p></div>;
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
+    <div className="min-h-screen relative">
+      <div className="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+      </div>
+      <div className="relative z-10 p-6 md:p-12">
       <div className="max-w-[1400px] mx-auto">
         <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
           Análise de <span className="text-[#FACC15]">Skills</span>
@@ -77,6 +82,7 @@ export default function CandidatoAnalise() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

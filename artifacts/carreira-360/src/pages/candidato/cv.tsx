@@ -52,7 +52,12 @@ export default function CandidatoCv() {
   if (loading) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><p className="font-display text-4xl text-[#FACC15] animate-pulse">A CARREGAR...</p></div>;
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
+    <div className="min-h-screen relative">
+      <div className="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+      </div>
+      <div className="relative z-10 p-6 md:p-12">
       <div className="max-w-[800px] mx-auto">
         <div className="flex items-center gap-4 mb-12">
           {hasCv ? <FileText size={48} className="text-[#FACC15]" /> : <Upload size={48} className="text-[#F97316]" />}
@@ -92,6 +97,7 @@ export default function CandidatoCv() {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

@@ -7,6 +7,8 @@ import {
   swipeActionsTable,
   notificationsTable,
   cvsTable,
+  matchedJobsTable,
+  jobSearchesTable,
 } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
@@ -236,19 +238,27 @@ router.post("/candidate/interviews/:id/respond", async (req, res) => {
   if (updatedAnswers.length >= questions.length) {
     let score: number;
     let feedback: string;
+    let questionAnalysis: any[] = [];
     try {
       const result = await generateInterviewFeedback(questions, updatedAnswers);
       score = result.score;
       feedback = result.feedback;
+      questionAnalysis = result.questionAnalysis || [];
     } catch {
-      score = Math.floor(Math.random() * 36) + 60;
-      feedback = "Entrevista concluída. Demonstraste competências relevantes para a posição.";
+      score = 60;
+      feedback = "Não foi possível gerar feedback detalhado. Verifica a tua conexão e tenta novamente.";
+      questionAnalysis = questions.map((q, i) => ({
+        question: q,
+        answer: updatedAnswers[i] || "Sem resposta",
+        score: 50,
+        feedback: "Análise indisponível.",
+      }));
     }
     const [updated] = await db.update(interviewsTable).set({
       answers: JSON.stringify(updatedAnswers), status: "completed",
       score, feedback, durationMinutes: Math.floor(Math.random() * 20) + 10, updatedAt: new Date(),
     }).where(eq(interviewsTable.id, Number(id))).returning();
-    return res.json({ ...updated, questions, answers: updatedAnswers, completed: true });
+    return res.json({ ...updated, questions, answers: updatedAnswers, questionAnalysis, completed: true });
   }
 
   const [updated] = await db.update(interviewsTable).set({
@@ -260,14 +270,38 @@ router.post("/candidate/interviews/:id/respond", async (req, res) => {
   });
 });
 
-// Swipe
+// Swipe - usa vagas reais da base de dados (via job search)
 router.get("/candidate/swipe/jobs", async (req, res) => {
   const user = (req as any).user;
   const existingSwipeJobIds = await db.select({ jobId: swipeActionsTable.jobId })
     .from(swipeActionsTable).where(eq(swipeActionsTable.userId, user.userId));
   const swipedIds = new Set(existingSwipeJobIds.map((r) => r.jobId));
-  const filtered = mockJobs.filter((j) => !swipedIds.has(j.id));
-  return res.json(filtered.slice(0, 10));
+
+  // Buscar vagas reais das pesquisas anteriores
+  const searches = await db.select().from(jobSearchesTable)
+    .where(eq(jobSearchesTable.userId, user.userId))
+    .orderBy(desc(jobSearchesTable.createdAt)).limit(3);
+
+  let jobs: any[] = [];
+  for (const search of searches) {
+    const searchJobs = await db.select().from(matchedJobsTable)
+      .where(eq(matchedJobsTable.searchId, search.id));
+    jobs.push(...searchJobs);
+  }
+
+  // Filtrar vagas já swipadas
+  const filtered = jobs.filter((j) => !swipedIds.has(j.id));
+
+  // Se não houver vagas de pesquisa, retornar vazio
+  return res.json(filtered.slice(0, 10).map(j => ({
+    id: j.id,
+    title: j.title,
+    company: j.company,
+    location: j.location,
+    description: j.description,
+    salary: "",
+    skills: JSON.parse(j.skillsRequired || "[]"),
+  })));
 });
 
 router.post("/candidate/swipe", async (req, res) => {
@@ -276,19 +310,26 @@ router.post("/candidate/swipe", async (req, res) => {
   if (!jobId || !action) return res.status(400).json({ error: "jobId e action são obrigatórios" });
   if (!["like", "superlike", "pass"].includes(action)) return res.status(400).json({ error: "Action inválida" });
 
-  const mockJob = mockJobs.find((j) => j.id === Number(jobId));
+  // Buscar vaga da base de dados
+  let jobInfo: any = null;
+  try {
+    const [dbJob] = await db.select().from(matchedJobsTable)
+      .where(eq(matchedJobsTable.id, Number(jobId))).limit(1);
+    if (dbJob) jobInfo = dbJob;
+  } catch {}
+
   const [recorded] = await db.insert(swipeActionsTable).values({
     userId: user.userId, jobId: Number(jobId),
-    jobTitle: jobTitle || mockJob?.title || null,
-    company: company || mockJob?.company || null,
-    action, jobData: jobData || (mockJob ? JSON.stringify(mockJob) : null),
+    jobTitle: jobTitle || jobInfo?.title || null,
+    company: company || jobInfo?.company || null,
+    action, jobData: jobData || (jobInfo ? JSON.stringify(jobInfo) : null),
   }).returning();
 
   if (action === "like" || action === "superlike") {
     await db.insert(notificationsTable).values({
       userId: user.userId, type: "job_match",
       title: "Nova vaga compatível",
-      message: `Encontrámos uma vaga que combina com as tuas competências - ${mockJob?.title || "vaga"}`,
+      message: `Encontrámos uma vaga que combina com as tuas competências - ${jobInfo?.title || "vaga"}`,
       read: false,
     });
   }

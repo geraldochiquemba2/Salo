@@ -48,12 +48,20 @@ export default function CandidatoSwipe() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12 flex flex-col items-center">
-      <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-8 self-start max-w-[1400px] w-full mx-auto">
+    <div className="min-h-screen p-6 md:p-12 flex flex-col items-center relative">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1600&q=80"
+          alt="Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+      </div>
+      <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-8 self-start max-w-[1400px] w-full mx-auto relative z-10">
         Swipe <span className="text-[#FACC15]">Vagas</span>
       </h1>
 
-      <div className="w-full max-w-lg mx-auto mb-12">
+      <div className="w-full max-w-lg mx-auto mb-12 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentJob.id}

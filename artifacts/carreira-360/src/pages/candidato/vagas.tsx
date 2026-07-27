@@ -12,7 +12,17 @@ export default function CandidatoVagas() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    apiFetch("/api/candidate/jobs").then(setJobs).catch(() => {}).finally(() => setLoading(false));
+    apiFetch("/api/candidate/jobs").then(async (existing) => {
+      if (existing && existing.length > 0) {
+        setJobs(existing);
+      } else {
+        setSearching(true);
+        await apiFetch("/api/candidate/jobs/search", { method: "POST", body: JSON.stringify({ keywords: "Developer", location: "Luanda" }) });
+        const updated = await apiFetch("/api/candidate/jobs");
+        setJobs(updated);
+        setSearching(false);
+      }
+    }).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
   async function handleSearch(e: React.FormEvent) {
@@ -32,7 +42,12 @@ export default function CandidatoVagas() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] p-6 md:p-12">
+    <div className="min-h-screen relative">
+      <div className="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+      </div>
+      <div className="relative z-10 p-6 md:p-12">
       <div className="max-w-[1400px] mx-auto">
         <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
           Buscar <span className="text-[#FACC15]">Vagas</span>
@@ -101,6 +116,7 @@ export default function CandidatoVagas() {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 }

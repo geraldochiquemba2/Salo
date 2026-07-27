@@ -52,35 +52,21 @@ function Router() {
       <Route path="/empresas" component={Empresas} />
 
       {/* Candidate - Protected */}
-      <Route path="/candidato" nest>
-        <ProtectedLayout>
-          <Switch>
-            <Route path="/" component={CandidatoDashboard} />
-            <Route path="/perfil" component={CandidatoPerfil} />
-            <Route path="/cv" component={CandidatoCv} />
-            <Route path="/vagas" component={CandidatoVagas} />
-            <Route path="/swipe" component={CandidatoSwipe} />
-            <Route path="/analise" component={CandidatoAnalise} />
-            <Route path="/cursos" component={CandidatoCursos} />
-            <Route path="/carta-motivacao" component={CandidatoCarta} />
-            <Route path="/entrevistas" component={CandidatoEntrevistas} />
-            <Route path="/notificacoes" component={CandidatoNotificacoes} />
-            <Route component={NotFound} />
-          </Switch>
-        </ProtectedLayout>
-      </Route>
+      <Route path="/candidato/perfil" component={() => <ProtectedLayout><CandidatoPerfil /></ProtectedLayout>} />
+      <Route path="/candidato/cv" component={() => <ProtectedLayout><CandidatoCv /></ProtectedLayout>} />
+      <Route path="/candidato/vagas" component={() => <ProtectedLayout><CandidatoVagas /></ProtectedLayout>} />
+      <Route path="/candidato/swipe" component={() => <ProtectedLayout><CandidatoSwipe /></ProtectedLayout>} />
+      <Route path="/candidato/analise" component={() => <ProtectedLayout><CandidatoAnalise /></ProtectedLayout>} />
+      <Route path="/candidato/cursos" component={() => <ProtectedLayout><CandidatoCursos /></ProtectedLayout>} />
+      <Route path="/candidato/carta-motivacao" component={() => <ProtectedLayout><CandidatoCarta /></ProtectedLayout>} />
+      <Route path="/candidato/entrevistas" component={() => <ProtectedLayout><CandidatoEntrevistas /></ProtectedLayout>} />
+      <Route path="/candidato/notificacoes" component={() => <ProtectedLayout><CandidatoNotificacoes /></ProtectedLayout>} />
+      <Route path="/candidato" component={() => <ProtectedLayout><CandidatoDashboard /></ProtectedLayout>} />
 
       {/* Recruiter - Protected */}
-      <Route path="/recrutador" nest>
-        <ProtectedLayout>
-          <Switch>
-            <Route path="/" component={RecrutadorDashboard} />
-            <Route path="/buscar" component={RecrutadorBuscar} />
-            <Route path="/ranking" component={RecrutadorRanking} />
-            <Route component={NotFound} />
-          </Switch>
-        </ProtectedLayout>
-      </Route>
+      <Route path="/recrutador/buscar" component={() => <ProtectedLayout><RecrutadorBuscar /></ProtectedLayout>} />
+      <Route path="/recrutador/ranking" component={() => <ProtectedLayout><RecrutadorRanking /></ProtectedLayout>} />
+      <Route path="/recrutador" component={() => <ProtectedLayout><RecrutadorDashboard /></ProtectedLayout>} />
 
       <Route component={NotFound} />
     </Switch>

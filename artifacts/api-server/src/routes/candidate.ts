@@ -63,7 +63,7 @@ router.post("/candidate/jobs/search", async (req, res) => {
   }).returning();
 
   try {
-    const linkedinJobs = generateRealisticJobs(keywords, location);
+    const linkedinJobs = await generateRealisticJobs(keywords, location);
 
     let cvSkills: string[] = [];
     const [cv] = await db.select().from(cvsTable).where(eq(cvsTable.userId, user.userId)).limit(1);
@@ -117,21 +117,7 @@ router.get("/candidate/analysis", async (req, res) => {
     const analysis = await analyzeSkills(skills);
     return res.json({ cvId: cv.id, ...analysis });
   } catch {
-    const allDemandedSkills = ["JavaScript", "React", "Node.js", "Python", "SQL", "TypeScript", "AWS", "Docker", "Git", "REST API"];
-    const strong = skills.filter(s => allDemandedSkills.some(d => d.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(d.toLowerCase())));
-    const missing = allDemandedSkills.filter(d => !skills.some(s => s.toLowerCase().includes(d.toLowerCase()) || d.toLowerCase().includes(s.toLowerCase())));
-    const score = Math.min(95, Math.max(20, Math.round((strong.length / allDemandedSkills.length) * 100)));
-    const marketDemand: Record<string, number> = {};
-    allDemandedSkills.forEach(s => { marketDemand[s] = Math.round(Math.random() * 60 + 40); });
-
-    return res.json({
-      cvId: cv.id,
-      overallMatchScore: score,
-      strongSkills: strong.length > 0 ? strong : skills.slice(0, 3),
-      missingSkills: missing.slice(0, 5),
-      recommendedRoles: ["Desenvolvedor Full Stack", "Engenheiro de Software", "Tech Lead", "Desenvolvedor Backend"],
-      marketDemand,
-    });
+    return res.status(500).json({ error: "Erro ao analisar competências. Verifica a conexão com a IA." });
   }
 });
 
