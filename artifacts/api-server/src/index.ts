@@ -30,7 +30,7 @@ app.listen(port, (err) => {
     cron.schedule("*/10 * * * *", async () => {
       try {
         const res = await fetch(`${RENDER_URL}/api/healthz`);
-        const data = await res.json();
+        const data = (await res.json()) as { ok?: boolean };
         logger.info({ status: res.status, ok: data.ok }, "[KeepAlive] ping OK");
       } catch (e: any) {
         logger.warn({ error: e.message }, "[KeepAlive] ping failed");

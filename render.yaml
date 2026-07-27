@@ -3,7 +3,7 @@ services:
     name: salo
     runtime: node
     plan: free
-    buildCommand: npx pnpm@10 install --no-frozen-lockfile && export PORT=10000 BASE_PATH=/ NODE_ENV=production && node artifacts/carreira-360/node_modules/.bin/vite build --config artifacts/carreira-360/vite.config.ts --outDir artifacts/carreira-360/dist/public && cd artifacts/api-server && node build.mjs
+    buildCommand: npx pnpm@10 install --no-frozen-lockfile && export PORT=10000 BASE_PATH=/ NODE_ENV=production && cd artifacts/carreira-360 && npx vite build --config vite.config.ts --outDir dist/public && cd ../../artifacts/api-server && node build.mjs
     startCommand: node artifacts/api-server/dist/index.mjs
     envVars:
       - key: NODE_ENV
