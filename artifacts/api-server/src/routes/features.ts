@@ -194,7 +194,8 @@ router.get("/candidate/interviews/:id", async (req, res) => {
 
 router.post("/candidate/interviews", async (req, res) => {
   const user = (req as any).user;
-  const { jobId, jobTitle, company } = req.body;
+  const { jobId, jobTitle, company, questionCount } = req.body;
+  const numQuestions = Math.max(5, Math.min(20, Number(questionCount) || 5));
 
   let skills: string[] = [];
   const [cv] = await db.select().from(cvsTable).where(eq(cvsTable.userId, user.userId)).limit(1);
@@ -202,15 +203,31 @@ router.post("/candidate/interviews", async (req, res) => {
 
   let questions: string[];
   try {
-    questions = await generateInterviewQuestions(skills, jobTitle || "Desenvolvedor", company || "Empresa");
+    questions = await generateInterviewQuestions(skills, jobTitle || "Desenvolvedor", company || "Empresa", numQuestions);
   } catch {
-    questions = [
+    const fallbackQuestions = [
       "Fala-me sobre ti e a tua experiência profissional.",
       "Porque é que queres trabalhar na nossa empresa?",
       "Qual é a tua maior força e a tua maior fraqueza?",
       "Descreve um projeto desafiante que realizaste.",
       "Onde te vês daqui a 5 anos?",
+      "Como lidas com pressão e prazos apertados?",
+      "Dá um exemplo de como resolveste um conflito em equipa.",
+      "Qual é a tua abordagem a novas tecnologias?",
+      "Conta-me sobre um erro que cometeste e o que aprendeste.",
+      "Porque devíamos contratar-te a ti em vez de outros candidatos?",
+      "Como organizas o teu trabalho diário?",
+      "Qual é o teu processo para resolver problemas complexos?",
+      "Fala sobre um projeto do qual te sentes orgulhoso.",
+      "Como te manténs atualizado na tua área?",
+      "Qual é a tua experiência com trabalho em equipa remota?",
+      "Descreve uma situação em que tiveste de tomar uma decisão difícil.",
+      "Como lidas com feedback negativo?",
+      "Qual é a tua expectativa salarial?",
+      "Onde te vês profissionalmente daqui a 3 anos?",
+      "Tens alguma pergunta para nós?",
     ];
+    questions = fallbackQuestions.slice(0, numQuestions);
   }
   const [interview] = await db.insert(interviewsTable).values({
     userId: user.userId, jobId: jobId || null,

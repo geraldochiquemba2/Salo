@@ -26,6 +26,7 @@ export const candidateResultsTable = pgTable("candidate_results", {
   profileUrl: text("profile_url").notNull(),
   summary: text("summary"),
   avatarUrl: text("avatar_url"),
+  source: text("source").notNull().default("plataforma"),
 });
 
 export const coursesTable = pgTable("courses", {

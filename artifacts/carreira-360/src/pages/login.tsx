@@ -43,32 +43,32 @@ export default function Login() {
           alt="Login background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+        <div className="absolute inset-0 bg-[#13293D]/80"></div>
       </div>
       <div className="w-full max-w-md relative z-10">
-        <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#FACC15] transition-colors mb-8 font-bold text-sm uppercase tracking-wider">
+        <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#1B98E0] transition-colors mb-8 font-bold text-sm uppercase tracking-wider">
           ← Voltar
         </Link>
-        <Link href="/" className="font-display text-4xl sm:text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
+        <Link href="/" className="font-display text-4xl sm:text-5xl text-[#1B98E0] block text-center mb-12">TALENTOS</Link>
         <h1 className="font-display text-4xl sm:text-6xl text-white text-center mb-12 uppercase">Entrar</h1>
         <form onSubmit={handleSubmit} noValidate className="space-y-6">
           <div>
-            <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">E-mail</label>
+            <label className="block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">E-mail</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="teu@email.com" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30" placeholder="teu@email.com" />
           </div>
           <div>
-            <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Senha</label>
+            <label className="block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">Senha</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="••••••••" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30" placeholder="••••••••" />
           </div>
           <button type="submit" disabled={loading}
-            className="w-full h-14 sm:h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+            className="w-full h-14 sm:h-20 bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(36,123,160,1)]">
             {loading ? "A entrar..." : "Entrar"}
           </button>
         </form>
         <p className="text-center text-white/50 mt-8 font-sans">
-          Não tens conta? <Link href="/cadastro" className="text-[#FACC15] font-bold hover:text-[#F97316] uppercase">Registar</Link>
+          Não tens conta? <Link href="/cadastro" className="text-[#1B98E0] font-bold hover:text-[#247BA0] uppercase">Registar</Link>
         </p>
       </div>
     </div>

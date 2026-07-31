@@ -48,21 +48,21 @@ export default function CandidatoPerfil() {
     }
   }
 
-  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-4 sm:px-6 py-4 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30";
-  const labelClass = "block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3";
+  const inputClass = "w-full bg-white/5 border-2 border-white/20 text-white px-4 sm:px-6 py-4 text-base sm:text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30";
+  const labelClass = "block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3";
 
-  if (loading) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><p className="font-display text-4xl text-[#FACC15] animate-pulse">A CARREGAR...</p></div>;
+  if (loading) return <div className="min-h-screen bg-[#13293D] flex items-center justify-center"><p className="font-display text-4xl text-[#1B98E0] animate-pulse">A CARREGAR...</p></div>;
 
   return (
     <div className="min-h-screen relative">
       <div className="absolute inset-0 z-0">
         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+        <div className="absolute inset-0 bg-[#13293D]/50"></div>
       </div>
       <div className="relative z-10 p-6 md:p-12">
       <div className="max-w-[800px] mx-auto">
         <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-12">
-          Meu <span className="text-[#FACC15]">Perfil</span>
+          Meu <span className="text-[#1B98E0]">Perfil</span>
         </h1>
         <form onSubmit={handleSave} className="space-y-8">
           <div>
@@ -104,7 +104,7 @@ export default function CandidatoPerfil() {
             <textarea value={form.education} onChange={e => setForm({...form, education: e.target.value})} rows={3} placeholder="Licenciatura - Universidade Agostinho Neto (2022)" className={`${inputClass} resize-none`} />
           </div>
           <button type="submit" disabled={saving}
-            className="w-full h-14 sm:h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+            className="w-full h-14 sm:h-20 bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(36,123,160,1)]">
             {saving ? "A GUARDAR..." : "GUARDAR PERFIL"}
           </button>
         </form>

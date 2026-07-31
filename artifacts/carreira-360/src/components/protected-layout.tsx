@@ -11,11 +11,11 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
     if (!loading && !user) navigate("/login");
   }, [user, loading, navigate]);
 
-  if (loading) return <div className="min-h-screen bg-[#0A0A0A] flex items-center justify-center"><div className="font-display text-4xl text-[#FACC15] animate-pulse">SALO</div></div>;
+  if (loading) return <div className="min-h-screen bg-[#13293D] flex items-center justify-center"><div className="font-display text-4xl text-[#1B98E0] animate-pulse">TALENTOS</div></div>;
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white">
+    <div className="min-h-screen bg-[#13293D] text-white">
       <Navbar />
       <main className="pt-20">{children}</main>
     </div>

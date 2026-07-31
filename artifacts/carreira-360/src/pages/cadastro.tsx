@@ -32,7 +32,7 @@ export default function Cadastro() {
     try {
       const user = await register(email, password, name, role);
       setUser(user);
-      toast({ title: "CONTA CRIADA", description: "Bem-vindo ao SALO!" });
+      toast({ title: "CONTA CRIADA", description: "Bem-vindo ao TALENTOS!" });
       navigate(user.role === "recruiter" ? "/recrutador" : "/candidato");
     } catch (err: any) {
       toast({ title: "ERRO", description: err.message, variant: "destructive" });
@@ -49,50 +49,50 @@ export default function Cadastro() {
           alt="Cadastro background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-[#0A0A0A]/80"></div>
+        <div className="absolute inset-0 bg-[#13293D]/80"></div>
       </div>
       <div className="w-full max-w-md relative z-10">
-        <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#FACC15] transition-colors mb-8 font-bold text-sm uppercase tracking-wider">
+        <Link href="/" className="inline-flex items-center gap-2 text-white/60 hover:text-[#1B98E0] transition-colors mb-8 font-bold text-sm uppercase tracking-wider">
           ← Voltar
         </Link>
-        <Link href="/" className="font-display text-4xl sm:text-5xl text-[#FACC15] block text-center mb-12">SALO</Link>
+        <Link href="/" className="font-display text-4xl sm:text-5xl text-[#1B98E0] block text-center mb-12">TALENTOS</Link>
         <h1 className="font-display text-4xl sm:text-6xl text-white text-center mb-12 uppercase">Criar Conta</h1>
         <form onSubmit={handleSubmit} noValidate className="space-y-6">
           <div>
-            <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Nome</label>
+            <label className="block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">Nome</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)} required
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="O teu nome" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30" placeholder="O teu nome" />
           </div>
           <div>
-            <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">E-mail</label>
+            <label className="block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">E-mail</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="teu@email.com" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30" placeholder="teu@email.com" />
           </div>
           <div>
-            <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Senha</label>
+            <label className="block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">Senha</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
-              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#FACC15] focus:outline-none rounded-none placeholder:text-white/30" placeholder="Mínimo 6 caracteres" />
+              className="w-full bg-white/5 border-2 border-white/20 text-white h-14 sm:h-16 px-4 sm:px-6 text-base sm:text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30" placeholder="Mínimo 6 caracteres" />
           </div>
           <div>
-            <label className="block text-[#FACC15] uppercase tracking-widest font-bold text-sm mb-3">Eu sou</label>
+            <label className="block text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">Eu sou</label>
             <div className="grid grid-cols-2 gap-4">
               <button type="button" onClick={() => setRole("candidate")}
-                className={`h-16 font-display text-xl uppercase border-2 transition-colors ${role === "candidate" ? "bg-[#FACC15] text-[#0A0A0A] border-[#FACC15]" : "border-white/20 text-white hover:border-[#FACC15]"}`}>
+                className={`h-16 font-display text-xl uppercase border-2 transition-colors ${role === "candidate" ? "bg-[#1B98E0] text-[#13293D] border-[#1B98E0]" : "border-white/20 text-white hover:border-[#1B98E0]"}`}>
                 Candidato
               </button>
               <button type="button" onClick={() => setRole("recruiter")}
-                className={`h-16 font-display text-xl uppercase border-2 transition-colors ${role === "recruiter" ? "bg-[#F97316] text-white border-[#F97316]" : "border-white/20 text-white hover:border-[#F97316]"}`}>
+                className={`h-16 font-display text-xl uppercase border-2 transition-colors ${role === "recruiter" ? "bg-[#247BA0] text-white border-[#247BA0]" : "border-white/20 text-white hover:border-[#247BA0]"}`}>
                 Recrutador
               </button>
             </div>
           </div>
           <button type="submit" disabled={loading}
-            className="w-full h-14 sm:h-20 bg-[#FACC15] hover:bg-[#F97316] text-[#0A0A0A] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(249,115,22,1)]">
+            className="w-full h-14 sm:h-20 bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(36,123,160,1)]">
             {loading ? "A criar..." : "Criar Conta"}
           </button>
         </form>
         <p className="text-center text-white/50 mt-8 font-sans">
-          Já tens conta? <Link href="/login" className="text-[#FACC15] font-bold hover:text-[#F97316] uppercase">Entrar</Link>
+          Já tens conta? <Link href="/login" className="text-[#1B98E0] font-bold hover:text-[#247BA0] uppercase">Entrar</Link>
         </p>
       </div>
     </div>

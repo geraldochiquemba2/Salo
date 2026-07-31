@@ -32,7 +32,7 @@ Cada vaga deve ter:
 - company: empresa angolana realista (ex: Unitel, BAI, Sonangol, Vodacom, etc.)
 - location: cidade em Angola (Luanda, Benguela, Lubango, Huambo, etc.)
 - description: descrição curta do cargo (1-2 frases)
-- url: URL fictícia de LinkedIn
+- url: URL de pesquisa no LinkedIn (formato: https://www.linkedin.com/jobs/search/?keywords=TITULO_DA_VAGA&location=LUANDA+ANGOLA)
 - postedAt: data nos últimos 30 dias (formato YYYY-MM-DD)
 - salary: salário em Kwanzas (formato: "XXX.000 - YYY.000 Kz")
 - jobType: CLT, Prestação de Serviços, Estágio, Freelancer ou Tempo Integral
@@ -56,19 +56,25 @@ Exemplo: [{"title": "...", "company": "...", ...}]`;
         company: j.company || "Empresa",
         location: j.location || (location || "Luanda, Angola"),
         description: j.description || "",
-        url: j.url || `https://www.linkedin.com/jobs/view/${1000000 + Math.floor(Math.random() * 900000)}`,
+        url: j.url || `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(j.title || keywords)}&location=${encodeURIComponent("Luanda, Angola")}`,
         postedAt: j.postedAt || new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
         salary: j.salary || "",
         jobType: j.jobType || "Tempo Integral",
         skills: Array.isArray(j.skills) ? j.skills : [],
       }));
     }
-  } catch {}
+  } catch (err) {
+    console.error("[generateRealisticJobs] IA falhou, usando fallback:", err);
+  }
 
   // Fallback: vagas básicas se IA falhar
   return [
-    { title: "Desenvolvedor", company: "Unitel", location: location || "Luanda, Angola", description: "Desenvolvimento de software", url: `https://www.linkedin.com/jobs/view/${1000000 + Math.floor(Math.random() * 900000)}`, postedAt: new Date().toISOString().split("T")[0], salary: "300.000 - 500.000 Kz", jobType: "Tempo Integral", skills: ["JavaScript", "React"] },
-    { title: "Analista", company: "BAI", location: location || "Luanda, Angola", description: "Análise de dados", url: `https://www.linkedin.com/jobs/view/${1000000 + Math.floor(Math.random() * 900000)}`, postedAt: new Date().toISOString().split("T")[0], salary: "250.000 - 400.000 Kz", jobType: "Tempo Integral", skills: ["SQL", "Python"] },
+    { title: "Desenvolvedor Full Stack", company: "Unitel", location: location || "Luanda, Angola", description: "Desenvolvimento de aplicações web e mobile utilizando tecnologias modernas.", url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent("Desenvolvedor Full Stack")}&location=${encodeURIComponent("Luanda, Angola")}`, postedAt: new Date().toISOString().split("T")[0], salary: "300.000 - 500.000 Kz", jobType: "Tempo Integral", skills: ["JavaScript", "React", "Node.js", "TypeScript"] },
+    { title: "Analista de Dados", company: "BAI", location: location || "Luanda, Angola", description: "Análise e modelagem de dados para apoio à tomada de decisões.", url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent("Analista de Dados")}&location=${encodeURIComponent("Luanda, Angola")}`, postedAt: new Date().toISOString().split("T")[0], salary: "250.000 - 400.000 Kz", jobType: "Tempo Integral", skills: ["SQL", "Python", "Power BI"] },
+    { title: "Engenheiro DevOps", company: "Sonangol", location: location || "Luanda, Angola", description: "Gestão de infraestrutura cloud e pipelines de CI/CD.", url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent("Engenheiro DevOps")}&location=${encodeURIComponent("Luanda, Angola")}`, postedAt: new Date().toISOString().split("T")[0], salary: "400.000 - 600.000 Kz", jobType: "Tempo Integral", skills: ["Docker", "AWS", "Kubernetes", "Linux"] },
+    { title: "Desenvolvedor Mobile", company: "Vodacom", location: location || "Luanda, Angola", description: "Desenvolvimento de aplicações mobile para Android e iOS.", url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent("Desenvolvedor Mobile")}&location=${encodeURIComponent("Luanda, Angola")}`, postedAt: new Date().toISOString().split("T")[0], salary: "280.000 - 450.000 Kz", jobType: "Tempo Integral", skills: ["React Native", "Flutter", "JavaScript"] },
+    { title: "Designer UI/UX", company: "Movitel", location: location || "Luanda, Angola", description: "Design de interfaces de utilizador e experiência do utilizador.", url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent("Designer UI UX")}&location=${encodeURIComponent("Luanda, Angola")}`, postedAt: new Date().toISOString().split("T")[0], salary: "200.000 - 350.000 Kz", jobType: "Tempo Integral", skills: ["Figma", "Adobe XD", "CSS", "Prototyping"] },
+    { title: "Administrador de Base de Dados", company: "TAAG", location: location || "Luanda, Angola", description: "Administração e otimização de bases de dados empresariais.", url: `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent("Administrador Base Dados")}&location=${encodeURIComponent("Luanda, Angola")}`, postedAt: new Date().toISOString().split("T")[0], salary: "350.000 - 550.000 Kz", jobType: "Tempo Integral", skills: ["PostgreSQL", "MySQL", "Oracle", "SQL"] },
   ];
 }
 
@@ -83,7 +89,7 @@ Cada perfil deve ter:
 - skills: array de 3-5 competências
 - experience: tempo de experiência
 - education: formação académica
-- profileUrl: URL fictícia de LinkedIn
+- profileUrl: URL de perfil no LinkedIn (formato: https://www.linkedin.com/in/NOME-DO-PERFIL)
 - avatarUrl: URL de avatar (use photos.unsplash.com)
 
 Responde APENAS com um JSON array, sem markdown, sem explicações.`;

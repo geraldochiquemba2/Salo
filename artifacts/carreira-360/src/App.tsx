@@ -20,6 +20,7 @@ import CandidatoPerfil from "@/pages/candidato/perfil";
 import CandidatoCv from "@/pages/candidato/cv";
 import CandidatoVagas from "@/pages/candidato/vagas";
 import CandidatoSwipe from "@/pages/candidato/swipe";
+import CandidatoFavoritos from "@/pages/candidato/favoritos";
 import CandidatoAnalise from "@/pages/candidato/analise";
 import CandidatoCursos from "@/pages/candidato/cursos";
 import CandidatoCarta from "@/pages/candidato/carta-motivacao";
@@ -56,6 +57,7 @@ function Router() {
       <Route path="/candidato/cv" component={() => <ProtectedLayout><CandidatoCv /></ProtectedLayout>} />
       <Route path="/candidato/vagas" component={() => <ProtectedLayout><CandidatoVagas /></ProtectedLayout>} />
       <Route path="/candidato/swipe" component={() => <ProtectedLayout><CandidatoSwipe /></ProtectedLayout>} />
+      <Route path="/candidato/favoritos" component={() => <ProtectedLayout><CandidatoFavoritos /></ProtectedLayout>} />
       <Route path="/candidato/analise" component={() => <ProtectedLayout><CandidatoAnalise /></ProtectedLayout>} />
       <Route path="/candidato/cursos" component={() => <ProtectedLayout><CandidatoCursos /></ProtectedLayout>} />
       <Route path="/candidato/carta-motivacao" component={() => <ProtectedLayout><CandidatoCarta /></ProtectedLayout>} />

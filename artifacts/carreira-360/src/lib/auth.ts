@@ -1,29 +1,29 @@
 const API_BASE = "";
 
 export function getToken(): string | null {
-  return localStorage.getItem("salo_token");
+  return localStorage.getItem("talentos_token");
 }
 
 export function setToken(token: string) {
-  localStorage.setItem("salo_token", token);
+  localStorage.setItem("talentos_token", token);
 }
 
 export function removeToken() {
-  localStorage.removeItem("salo_token");
+  localStorage.removeItem("talentos_token");
 }
 
 export function getUser(): { id: number; email: string; name: string; role: string } | null {
-  const raw = localStorage.getItem("salo_user");
+  const raw = localStorage.getItem("talentos_user");
   if (!raw) return null;
   try { return JSON.parse(raw); } catch { return null; }
 }
 
 export function setUser(user: { id: number; email: string; name: string; role: string }) {
-  localStorage.setItem("salo_user", JSON.stringify(user));
+  localStorage.setItem("talentos_user", JSON.stringify(user));
 }
 
 export function removeUser() {
-  localStorage.removeItem("salo_user");
+  localStorage.removeItem("talentos_user");
 }
 
 export async function apiFetch(path: string, options: RequestInit = {}): Promise<any> {

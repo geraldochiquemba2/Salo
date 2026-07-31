@@ -27,25 +27,25 @@
 }
 
 :root {
-  /* #0A0A0A */
-  --background: 0 0% 4%;
-  --foreground: 0 0% 100%;
+  /* #13293D - Prussian Blue */
+  --background: 210 53% 16%;
+  --foreground: 187 25% 93%;
   
-  --border: 0 0% 20%;
-  --input: 48 96% 53%; /* Yellow border for inputs */
-  --ring: 48 96% 53%;
+  --border: 210 30% 25%;
+  --input: 204 80% 49%;
+  --ring: 204 80% 49%;
 
-  /* #FACC15 */
-  --primary: 48 96% 53%;
-  --primary-foreground: 0 0% 4%;
+  /* #1B98E0 - Carolina Blue */
+  --primary: 204 80% 49%;
+  --primary-foreground: 187 25% 93%;
 
-  /* #F97316 */
-  --secondary: 25 95% 53%;
-  --secondary-foreground: 0 0% 100%;
+  /* #247BA0 - Celadon Blue */
+  --secondary: 199 63% 38%;
+  --secondary-foreground: 187 25% 93%;
 
-  /* #F5F0E8 */
-  --accent: 37 43% 94%;
-  --accent-foreground: 0 0% 4%;
+  /* #E8F1F2 - Azure */
+  --accent: 187 25% 93%;
+  --accent-foreground: 210 53% 16%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-display: 'Bebas Neue', sans-serif;

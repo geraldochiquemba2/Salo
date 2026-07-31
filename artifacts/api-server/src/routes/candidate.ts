@@ -3,7 +3,7 @@ import { db, cvsTable, jobSearchesTable, matchedJobsTable, coursesTable } from "
 import { eq, desc } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
 import { generateRealisticJobs } from "../lib/linkedin";
-import { analyzeSkills } from "../lib/groq";
+import { analyzeSkills, parseCvWithAi, aiMatchJobsToCv, aiAnalyzeAllJobs } from "../lib/groq";
 
 const router = Router();
 router.use(requireAuth);
@@ -33,6 +33,37 @@ router.post("/candidate/cv", async (req, res) => {
     summary: summary || null,
   }).returning();
   return res.status(201).json({ ...cv, skills });
+});
+
+router.post("/candidate/cv/upload", async (req, res) => {
+  const user = (req as any).user;
+  const { fileName, content } = req.body;
+  if (!fileName || !content) {
+    return res.status(400).json({ error: "Ficheiro ou conteúdo em falta" });
+  }
+
+  try {
+    const parsed = await parseCvWithAi(content);
+
+    if (!parsed.isValid) {
+      return res.status(400).json({ error: parsed.rejectionReason || "O ficheiro carregado não é um CV válido. Por favor, carrega apenas o teu currículo." });
+    }
+
+    const skillsJson = JSON.stringify(parsed.skills);
+    await db.delete(cvsTable).where(eq(cvsTable.userId, user.userId));
+    const [cv] = await db.insert(cvsTable).values({
+      userId: user.userId,
+      fileName,
+      content,
+      skills: skillsJson,
+      experience: parsed.experience,
+      education: parsed.education,
+      summary: parsed.summary,
+    }).returning();
+    return res.status(201).json({ ...cv, skills: parsed.skills });
+  } catch (err: any) {
+    return res.status(500).json({ error: "Erro ao processar o CV com IA: " + err.message });
+  }
 });
 
 router.get("/candidate/jobs", async (req, res) => {
@@ -104,6 +135,39 @@ router.post("/candidate/jobs/search", async (req, res) => {
       status: "failed",
     }).where(eq(jobSearchesTable.id, search.id));
     return res.status(500).json({ error: "Erro ao buscar vagas" });
+  }
+});
+
+router.post("/candidate/jobs/ai-match", async (req, res) => {
+  const user = (req as any).user;
+  const { jobs } = req.body;
+  if (!jobs || !Array.isArray(jobs) || jobs.length === 0) {
+    return res.status(400).json({ error: "Lista de vagas é obrigatória" });
+  }
+
+  try {
+    const [cv] = await db.select().from(cvsTable).where(eq(cvsTable.userId, user.userId)).limit(1);
+    if (!cv) return res.status(404).json({ error: "CV não encontrado. Faz upload do teu CV primeiro." });
+
+    const cvSkills: string[] = JSON.parse(cv.skills);
+    const result = await aiMatchJobsToCv(jobs, cvSkills, cv.summary || "");
+    return res.json(result);
+  } catch (err: any) {
+    return res.status(500).json({ error: "Erro ao analisar vagas com IA: " + err.message });
+  }
+});
+
+router.post("/candidate/jobs/ai-analyze", async (req, res) => {
+  const { jobs } = req.body;
+  if (!jobs || !Array.isArray(jobs) || jobs.length === 0) {
+    return res.status(400).json({ error: "Lista de vagas é obrigatória" });
+  }
+
+  try {
+    const result = await aiAnalyzeAllJobs(jobs);
+    return res.json(result);
+  } catch (err: any) {
+    return res.status(500).json({ error: "Erro ao analisar vagas com IA: " + err.message });
   }
 });
 
