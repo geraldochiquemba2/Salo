@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-rm -rf node_modules artifacts/*/node_modules lib/*/node_modules
-rm -f pnpm-lock.yaml
-
 npx pnpm@10 install --no-frozen-lockfile
 
 export PORT=10000
