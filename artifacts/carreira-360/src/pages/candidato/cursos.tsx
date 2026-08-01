@@ -8,56 +8,86 @@ const allCourses = [
   { id: 2, skill: "Electricidade", title: "Electricidade Geral e Instalações", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "4 meses", level: "Técnico", free: true, angolan: true },
   { id: 3, skill: "Mecânica", title: "Mecânica Automóvel e Diesel", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "6 meses", level: "Técnico", free: true, angolan: true },
   { id: 4, skill: "Informática", title: "Manutenção de Computadores e Redes", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", level: "Técnico", free: true, angolan: true },
-  { id: 5, skill: "Cabeleireiro", title: "Cabeleireiro e Estética", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", level: "Técnico", free: true, angolan: true },
-  { id: 6, skill: "Costura", title: "Costura e Confeção", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "4 meses", level: "Técnico", free: true, angolan: true },
+  { id: 5, skill: "Redes", title: "Configuração de Redes e Wi-Fi", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", level: "Técnico", free: true, angolan: true },
+  { id: 6, skill: "Hardware", title: "Hardware e Manutenção de Computadores", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", level: "Técnico", free: true, angolan: true },
+  { id: 7, skill: "Suporte", title: "Suporte Técnico de Informática", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", level: "Técnico", free: true, angolan: true },
+  { id: 8, skill: "CCTV", title: "Instalação de Sistemas CCTV e Segurança", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "2 meses", level: "Técnico", free: true, angolan: true },
+  { id: 9, skill: "PLC", title: "Programação de PLCs e Automação", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "4 meses", level: "Técnico", free: true, angolan: true },
+  { id: 10, skill: "Cabeleireiro", title: "Cabeleireiro e Estética", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", level: "Técnico", free: true, angolan: true },
+  { id: 11, skill: "Costura", title: "Costura e Confeção", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "4 meses", level: "Técnico", free: true, angolan: true },
 
-  // INESCOI — Compliance, Riscos, Banca
-  { id: 7, skill: "Compliance", title: "Compliance Officer", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/Compliance-Officer", duration: "40 horas", level: "Avançado", free: false, angolan: true },
-  { id: 8, skill: "Gestão de Riscos", title: "Gestão de Riscos Corporativos", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/gestao-de-riscos", duration: "40 horas", level: "Avançado", free: false, angolan: true },
-  { id: 9, skill: "Auditoria", title: "Controlo Interno e Auditoria", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/controlo-interno-e-auditoria", duration: "40 horas", level: "Avançado", free: false, angolan: true },
-  { id: 10, skill: "Banca", title: "Banca e Sistema Financeiro", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/banca-e-sistema-financeiro", duration: "20 horas", level: "Avançado", free: false, angolan: true },
-  { id: 11, skill: "AML", title: "Prevenção do Branqueamento de Capitais", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/prevencao-do-branqueamento-de-capitais-bcft", duration: "20 horas", level: "Avançado", free: false, angolan: true },
-  { id: 12, skill: "ESG", title: "ESG e Sustentabilidade Corporativa", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/esg-e-sustentabilidade-corporativa", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  // INESCOI — Compliance, Riscos, Banca, Cibersegurança
+  { id: 12, skill: "Cibersegurança", title: "Cibersegurança e Firewalls", provider: "INESCOI", url: "https://www.inescoi.ao", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  { id: 13, skill: "Firewall", title: "Administração de Firewalls", provider: "INESCOI", url: "https://www.inescoi.ao", duration: "30 horas", level: "Avançado", free: false, angolan: true },
+  { id: 14, skill: "Segurança", title: "Segurança da Informação", provider: "INESCOI", url: "https://www.inescoi.ao", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  { id: 15, skill: "Cloud", title: "Cloud Computing e Virtualização", provider: "INESCOI", url: "https://www.inescoi.ao", duration: "30 horas", level: "Avançado", free: false, angolan: true },
+  { id: 16, skill: "Compliance", title: "Compliance Officer", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/Compliance-Officer", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  { id: 17, skill: "Gestão de Riscos", title: "Gestão de Riscos Corporativos", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/gestao-de-riscos", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  { id: 18, skill: "Auditoria", title: "Controlo Interno e Auditoria", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/controlo-interno-e-auditoria", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  { id: 19, skill: "Banca", title: "Banca e Sistema Financeiro", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/banca-e-sistema-financeiro", duration: "20 horas", level: "Avançado", free: false, angolan: true },
+  { id: 20, skill: "AML", title: "Prevenção do Branqueamento de Capitais", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/prevencao-do-branqueamento-de-capitais-bcft", duration: "20 horas", level: "Avançado", free: false, angolan: true },
+  { id: 21, skill: "ESG", title: "ESG e Sustentabilidade Corporativa", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/esg-e-sustentabilidade-corporativa", duration: "40 horas", level: "Avançado", free: false, angolan: true },
 
   // CursosAngola — Plataforma online
-  { id: 13, skill: "Excel", title: "Excel em 1 Hora — Fórmulas Essenciais", provider: "CursosAngola", url: "https://cursosangola.com/curso/0c34615a-cbea-4ac0-a3da-0d0fa6720123", duration: "1h", level: "Iniciante", free: true, angolan: true },
-  { id: 14, skill: "WordPress", title: "WordPress com Elementor", provider: "CursosAngola", url: "https://cursosangola.com/curso/4b8460de-fd27-4295-ab41-7e523df632c9", duration: "3h 41min", level: "Iniciante", free: true, angolan: true },
-  { id: 15, skill: "Inteligência Artificial", title: "Produtos Digitais com IA + Canva", provider: "CursosAngola", url: "https://cursosangola.com/curso/13371045-c871-49e3-bd51-8ab58a85388e", duration: "15min", level: "Iniciante", free: true, angolan: true },
-
-  // ISPA — Instituto Superior Politécnico Atlântida
-  { id: 16, skill: "Engenharia Informática", title: "Engenharia Informática", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 17, skill: "Gestão", title: "Gestão de Empresas", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 18, skill: "Direito", title: "Direito", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 19, skill: "Contabilidade", title: "Gestão Financeira e Contabilidade", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 20, skill: "Arquitetura", title: "Arquitetura e Urbanismo", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "5 anos", level: "Licenciatura", free: false, angolan: true },
-
-  // IMETRO — Instituto Superior Politécnico Metropolitano
-  { id: 21, skill: "Direito", title: "Direito", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 22, skill: "Gestão", title: "Administração e Gestão", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 23, skill: "Contabilidade", title: "Contabilidade", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 24, skill: "Relações Públicas", title: "Relações Públicas e Comunicação", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 22, skill: "Excel", title: "Excel em 1 Hora — Fórmulas Essenciais", provider: "CursosAngola", url: "https://cursosangola.com/curso/0c34615a-cbea-4ac0-a3da-0d0fa6720123", duration: "1h", level: "Iniciante", free: true, angolan: true },
+  { id: 23, skill: "PowerPoint", title: "PowerPoint — Apresentações Profissionais", provider: "CursosAngola", url: "https://cursosangola.com", duration: "1h", level: "Iniciante", free: true, angolan: true },
+  { id: 24, skill: "Python", title: "Python Fundamentos", provider: "CursosAngola", url: "https://cursosangola.com", duration: "4h", level: "Iniciante", free: true, angolan: true },
+  { id: 25, skill: "SQL", title: "Base de Dados e SQL", provider: "CursosAngola", url: "https://cursosangola.com", duration: "2h", level: "Iniciante", free: true, angolan: true },
+  { id: 26, skill: "JavaScript", title: "JavaScript Essencial", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Iniciante", free: true, angolan: true },
+  { id: 27, skill: "React", title: "React — Desenvolvimento Web", provider: "CursosAngola", url: "https://cursosangola.com", duration: "4h", level: "Intermédio", free: true, angolan: true },
+  { id: 28, skill: "Node.js", title: "Node.js e APIs REST", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Intermédio", free: true, angolan: true },
+  { id: 29, skill: "TypeScript", title: "TypeScript para Developers", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Intermédio", free: true, angolan: true },
+  { id: 30, skill: "Java", title: "Java Fundamentos", provider: "CursosAngola", url: "https://cursosangola.com", duration: "4h", level: "Iniciante", free: true, angolan: true },
+  { id: 31, skill: "WordPress", title: "WordPress com Elementor", provider: "CursosAngola", url: "https://cursosangola.com/curso/4b8460de-fd27-4295-ab41-7e523df632c9", duration: "3h 41min", level: "Iniciante", free: true, angolan: true },
+  { id: 32, skill: "Figma", title: "Design de Interfaces com Figma", provider: "CursosAngola", url: "https://cursosangola.com", duration: "2h", level: "Iniciante", free: true, angolan: true },
+  { id: 33, skill: "Inteligência Artificial", title: "Produtos Digitais com IA + Canva", provider: "CursosAngola", url: "https://cursosangola.com/curso/13371045-c871-49e3-bd51-8ab58a85388e", duration: "15min", level: "Iniciante", free: true, angolan: true },
+  { id: 34, skill: "AWS", title: "AWS Cloud Concepts", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Iniciante", free: true, angolan: true },
+  { id: 35, skill: "Docker", title: "Docker e Containers", provider: "CursosAngola", url: "https://cursosangola.com", duration: "2h", level: "Intermédio", free: true, angolan: true },
+  { id: 36, skill: "Power BI", title: "Power BI — Dashboards e Relatórios", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Intermédio", free: true, angolan: true },
+  { id: 37, skill: "Golang", title: "Go (Golang) Fundamentos", provider: "CursosAngola", url: "https://cursosangola.com", duration: "4h", level: "Intermédio", free: true, angolan: true },
+  { id: 38, skill: "DevOps", title: "DevOps e CI/CD", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Avançado", free: true, angolan: true },
+  { id: 39, skill: "Microserviços", title: "Arquitectura de Microserviços", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", level: "Avançado", free: true, angolan: true },
+  { id: 40, skill: "Análise de Dados", title: "Análise de Dados com Python e SQL", provider: "CursosAngola", url: "https://cursosangola.com", duration: "4h", level: "Intermédio", free: true, angolan: true },
 
   // NEP Training — Formação Profissional
-  { id: 25, skill: "HSE", title: "HSE — Higiene, Segurança e Ambiente", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "40 horas", level: "Profissional", free: false, angolan: true },
-  { id: 26, skill: "Gestão de Projectos", title: "Gestão de Projectos (PMP)", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "40 horas", level: "Avançado", free: false, angolan: true },
-  { id: 27, skill: "Liderança", title: "Liderança e Gestão de Equipas", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "20 horas", level: "Intermédio", free: false, angolan: true },
+  { id: 41, skill: "HSE", title: "HSE — Higiene, Segurança e Ambiente", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "40 horas", level: "Profissional", free: false, angolan: true },
+  { id: 42, skill: "Gestão de Projectos", title: "Gestão de Projectos (PMP)", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "40 horas", level: "Avançado", free: false, angolan: true },
+  { id: 43, skill: "Liderança", title: "Liderança e Gestão de Equipas", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "20 horas", level: "Intermédio", free: false, angolan: true },
+  { id: 44, skill: "Scrum", title: "Scrum e Metodologias Ágeis", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "20 horas", level: "Intermédio", free: false, angolan: true },
+  { id: 45, skill: "Comunicação", title: "Comunicação Efectiva no Trabalho", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "16 horas", level: "Básico", free: false, angolan: true },
+  { id: 46, skill: "Inglês", title: "Inglês para Negócios", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "3 meses", level: "Intermédio", free: false, angolan: true },
+  { id: 47, skill: "Resolução de Problemas", title: "Resolução Analítica de Problemas", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "16 horas", level: "Intermédio", free: false, angolan: true },
+  { id: 48, skill: "Trabalho em Equipa", title: "Trabalho em Equipa e Colaboração", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "12 horas", level: "Básico", free: false, angolan: true },
+  { id: 49, skill: "Redes", title: "Administração de Redes (CCNA)", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "3 meses", level: "Profissional", free: false, angolan: true },
+
+  // ISPA — Instituto Superior Politécnico Atlântida
+  { id: 50, skill: "Engenharia Informática", title: "Engenharia Informática", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 51, skill: "Gestão", title: "Gestão e Liderança Empresarial", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "1 ano", level: "Pós-Graduação", free: false, angolan: true },
+  { id: 52, skill: "Direito", title: "Direito", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 53, skill: "Contabilidade", title: "Gestão Financeira e Contabilidade", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 54, skill: "Arquitetura", title: "Arquitetura e Urbanismo", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "5 anos", level: "Licenciatura", free: false, angolan: true },
+
+  // IMETRO
+  { id: 55, skill: "Direito", title: "Direito", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 56, skill: "Gestão", title: "Administração e Gestão", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 57, skill: "Contabilidade", title: "Contabilidade", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 58, skill: "Relações Públicas", title: "Relações Públicas e Comunicação", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
 
   // UnIA — Universidade Independente de Angola
-  { id: 28, skill: "Engenharia Informática", title: "Engenharia Informática", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 29, skill: "Gestão", title: "Gestão e Negócios Internacionais", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
-  { id: 30, skill: "Direito", title: "Direito", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 59, skill: "Engenharia Informática", title: "Engenharia Informática", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
+  { id: 60, skill: "Gestão", title: "Gestão e Negócios Internacionais", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", level: "Licenciatura", free: false, angolan: true },
 
   // UAN — Universidade Agostinho Neto
-  { id: 31, skill: "Engenharia Civil", title: "Engenharia Civil", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
-  { id: 32, skill: "Engenharia Electrónica", title: "Engenharia Electrónica e Telecomunicações", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
-  { id: 33, skill: "Engenharia Mecânica", title: "Engenharia Mecânica", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
-  { id: 34, skill: "Engenharia de Minas", title: "Engenharia de Minas", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
+  { id: 61, skill: "Engenharia Civil", title: "Engenharia Civil", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
+  { id: 62, skill: "Engenharia Electrónica", title: "Engenharia Electrónica e Telecomunicações", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
+  { id: 63, skill: "Engenharia Mecânica", title: "Engenharia Mecânica", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
+  { id: 64, skill: "Engenharia de Minas", title: "Engenharia de Minas", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", level: "Licenciatura", free: true, angolan: true },
 
   // GetTraining Angola
-  { id: 35, skill: "Formação Profissional", title: "Formações Empresariais", provider: "GetTraining", url: "https://get-ao.com/cursos", duration: "Variável", level: "Profissional", free: false, angolan: true },
+  { id: 65, skill: "Formação Profissional", title: "Formações Empresariais", provider: "GetTraining", url: "https://get-ao.com/cursos", duration: "Variável", level: "Profissional", free: false, angolan: true },
 ];
 
-const skillCategories = ["Todos", "Informática", "Engenharia", "Gestão", "Direito", "Contabilidade", "HSE", "Compliance", "Banca", "ESG", "Excel", "WordPress", "Inteligência Artificial", "Costura", "Soldadura", "Electricidade", "Mecânica", "Cabeleireiro", "Liderança", "Gestão de Projectos", "AML", "Auditoria", "Arquitetura", "Relações Públicas", "Banca"];
+const skillCategories = ["Todos", "Informática", "Redes", "Cibersegurança", "Python", "JavaScript", "React", "SQL", "AWS", "Docker", "Excel", "Power BI", "Figma", "WordPress", "Inteligência Artificial", "Engenharia", "Gestão", "Direito", "Contabilidade", "HSE", "Compliance", "Banca", "ESG", "Costura", "Soldadura", "Electricidade", "Mecânica", "Cabeleireiro", "Liderança", "Scrum", "Gestão de Projectos", "AML", "Auditoria", "Arquitetura", "Relações Públicas", "Inglês", "Comunicação"];
 
 function CourseCard({ c }: { c: typeof allCourses[0] }) {
   return (

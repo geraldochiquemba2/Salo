@@ -18,5 +18,7 @@ services:
         value: 10000
       - key: BASE_PATH
         value: /
+      - key: SITE_URL
+        value: https://talento-ge6h.onrender.com
     healthCheckPath: /api/healthz
     autoDeploy: true

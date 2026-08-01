@@ -9,4 +9,4 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -sf https://salo-4csx.onrender.com/api/healthz || exit 1
+      - run: curl -sf https://talento-ge6h.onrender.com/api/healthz || exit 1
