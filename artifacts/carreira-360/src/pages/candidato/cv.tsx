@@ -37,23 +37,38 @@ export default function CandidatoCv() {
     });
   }
 
+  async function extractPdfText(file: File): Promise<string> {
+    // @ts-ignore - dynamic CDN import
+    const pdfjsLib = await import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.9.155/build/pdf.mjs");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.9.155/build/pdf.worker.min.mjs";
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      fullText += content.items.map((item: any) => item.str).join(" ") + "\n";
+    }
+    return fullText;
+  }
+
   async function handleFileUpload(file: File) {
     const ext = "." + file.name.split(".").pop()?.toLowerCase();
-    const validExtensions = [".txt", ".md", ".csv", ".pdf", ".docx", ".doc"];
+    const validExtensions = [".txt", ".md", ".csv", ".pdf"];
     if (!validExtensions.includes(ext)) {
-      toast({ title: "Formato não suportado", description: "Use ficheiros .txt, .pdf ou .docx", variant: "destructive" });
+      toast({ title: "Formato não suportado", description: "Formatos aceites: TXT, MD, CSV, PDF", variant: "destructive" });
       return;
     }
 
     setUploading(true);
     try {
       let content: string;
-      if (ext === ".pdf" || ext === ".docx" || ext === ".doc") {
-        const arrayBuffer = await file.arrayBuffer();
-        const bytes = new Uint8Array(arrayBuffer);
-        let binary = "";
-        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
-        content = btoa(binary);
+
+      if (ext === ".pdf") {
+        content = await extractPdfText(file);
+        if (!content || content.trim().length === 0) {
+          throw new Error("Não foi possível extrair texto do PDF. Pode ser uma imagem ou estar protegido.");
+        }
       } else {
         content = await readFileAsText(file);
       }
@@ -128,7 +143,7 @@ export default function CandidatoCv() {
               dragOver ? "border-[#1B98E0] bg-[#1B98E0]/10" : "border-white/20 hover:border-[#247BA0] hover:bg-white/5"
             } ${uploading ? "pointer-events-none opacity-60" : ""}`}
           >
-            <input ref={fileInputRef} type="file" accept=".txt,.md,.csv,.pdf,.docx,.doc" className="hidden"
+            <input ref={fileInputRef} type="file" accept=".txt,.md,.csv,.pdf" className="hidden"
               onChange={(e) => { const file = e.target.files?.[0]; if (file) handleFileUpload(file); e.target.value = ""; }} />
             {uploading ? (
               <div className="flex flex-col items-center gap-4">
@@ -147,9 +162,9 @@ export default function CandidatoCv() {
               <div className="flex flex-col items-center gap-4">
                 <FileUp size={64} className="text-[#247BA0]" />
                 <p className="font-display text-2xl text-white uppercase">Arrasta o teu CV aqui</p>
-                <p className="text-white/50 text-sm">ou clica para selecionar ficheiro</p>
-                <p className="text-white/30 text-xs mt-2">Formatos: TXT, PDF, DOCX</p>
-                <p className="text-[#1B98E0]/70 text-xs mt-1">A IA extrai automaticamente tudo</p>
+                <p className="text-white text-sm">ou clica para selecionar ficheiro</p>
+                <p className="text-white/60 text-xs mt-2">Formatos: TXT, PDF</p>
+                <p className="text-white/40 text-xs mt-1">A IA extrai automaticamente tudo</p>
               </div>
             )}
           </div>
@@ -157,38 +172,38 @@ export default function CandidatoCv() {
           {hasCv && (
             <div className="space-y-8">
               <div>
-                <p className="text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">NOME DO FICHEIRO</p>
-                <p className="w-full bg-white/5 border-2 border-white/20 text-white px-6 py-4 text-lg">{fileName}</p>
+                <p className="text-white uppercase tracking-widest font-bold text-sm mb-3">NOME DO FICHEIRO</p>
+                <p className="w-full bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 text-white px-6 py-4 text-lg shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">{fileName}</p>
               </div>
               <div>
-                <p className="text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">COMPETÊNCIAS</p>
+                <p className="text-white uppercase tracking-widest font-bold text-sm mb-3">COMPETÊNCIAS</p>
                 <div className="flex flex-wrap gap-2">
                   {skills.length > 0 ? skills.map((s, i) => (
-                    <span key={i} className="text-sm border border-[#1B98E0] text-[#1B98E0] px-3 py-1 uppercase font-bold">{s}</span>
+                    <span key={i} className="text-sm border border-white/30 text-white px-3 py-1 uppercase font-bold">{s}</span>
                   )) : <p className="text-white/30">Nenhuma competência extraída</p>}
                 </div>
               </div>
               {experience && (
                 <div>
-                  <p className="text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">EXPERIÊNCIA PROFISSIONAL</p>
-                  <p className="w-full bg-white/5 border-2 border-white/20 text-white/80 px-6 py-4 text-lg whitespace-pre-wrap">{experience}</p>
+                  <p className="text-white uppercase tracking-widest font-bold text-sm mb-3">EXPERIÊNCIA PROFISSIONAL</p>
+                  <p className="w-full bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 text-white px-6 py-4 text-lg whitespace-pre-wrap shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">{experience}</p>
                 </div>
               )}
               {education && (
                 <div>
-                  <p className="text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">FORMAÇÃO</p>
-                  <p className="w-full bg-white/5 border-2 border-white/20 text-white/80 px-6 py-4 text-lg whitespace-pre-wrap">{education}</p>
+                  <p className="text-white uppercase tracking-widest font-bold text-sm mb-3">FORMAÇÃO</p>
+                  <p className="w-full bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 text-white px-6 py-4 text-lg whitespace-pre-wrap shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">{education}</p>
                 </div>
               )}
               {summary && (
                 <div>
-                  <p className="text-[#1B98E0] uppercase tracking-widest font-bold text-sm mb-3">RESUMO</p>
-                  <p className="w-full bg-white/5 border-2 border-white/20 text-white/80 px-6 py-4 text-lg whitespace-pre-wrap">{summary}</p>
+                  <p className="text-white uppercase tracking-widest font-bold text-sm mb-3">RESUMO</p>
+                  <p className="w-full bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 text-white px-6 py-4 text-lg whitespace-pre-wrap shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]">{summary}</p>
                 </div>
               )}
 
               <button onClick={handleSave} disabled={saving}
-                className="w-full h-14 sm:h-20 bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(36,123,160,1)]">
+                className="w-full h-14 sm:h-20 bg-[#1B98E0] hover:bg-[#247BA0] text-white text-lg sm:text-2xl font-display uppercase transition-colors disabled:opacity-50 shadow-[8px_8px_0px_0px_rgba(36,123,160,1)]">
                 {saving ? "A GUARDAR..." : "GUARDAR CV"}
               </button>
             </div>

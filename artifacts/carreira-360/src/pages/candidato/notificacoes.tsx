@@ -47,7 +47,7 @@ export default function CandidatoNotificacoes() {
         ) : (
           <div className="space-y-4">
             {notifications.map((n: any) => (
-              <div key={n.id} className={`border-2 p-6 flex items-start gap-4 transition-colors ${n.read ? "bg-white/5 border-white/10" : "bg-[#1B98E0]/5 border-[#1B98E0]"}`}>
+              <div key={n.id} className={`border-2 p-6 flex items-start gap-4 transition-colors ${n.read ? "bg-[#13293D]/90 backdrop-blur-sm border-white/20 shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)]" : "bg-[#1B98E0]/10 backdrop-blur-sm border-[#1B98E0] shadow-[4px_4px_0px_0px_rgba(27,152,224,0.3)]"}`}>
                 <div className={`w-3 h-3 rounded-full mt-2 shrink-0 ${n.read ? "bg-white/20" : "bg-[#1B98E0]"}`} />
                 <div className="flex-1">
                   <h3 className="font-display text-lg sm:text-2xl text-white uppercase">{n.title}</h3>

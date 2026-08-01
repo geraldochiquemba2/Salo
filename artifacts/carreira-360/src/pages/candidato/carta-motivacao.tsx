@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
-import { MessageSquare, Plus, Trash2, Zap } from "lucide-react";
+import { MessageSquare, Plus, Trash2, Zap, CheckCircle, Info } from "lucide-react";
 
 export default function CandidatoCarta() {
   const { toast } = useToast();
@@ -10,10 +10,14 @@ export default function CandidatoCarta() {
   const [showForm, setShowForm] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [form, setForm] = useState({ title: "", content: "", companyName: "", position: "", tone: "professional" });
+  const [hasCv, setHasCv] = useState(false);
 
   const loadLetters = () => apiFetch("/api/candidate/cover-letters").then(setLetters).catch(() => {});
 
-  useEffect(() => { loadLetters().finally(() => setLoading(false)); }, []);
+  useEffect(() => {
+    loadLetters().finally(() => setLoading(false));
+    apiFetch("/api/candidate/cv").then(() => setHasCv(true)).catch(() => setHasCv(false));
+  }, []);
 
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault();
@@ -22,7 +26,12 @@ export default function CandidatoCarta() {
     try {
       const result = await apiFetch("/api/candidate/cover-letters/generate", { method: "POST", body: JSON.stringify({ companyName: form.companyName, position: form.position, tone: form.tone }) });
       setForm(prev => ({ ...prev, content: result.content, title: `Carta - ${form.position} @ ${form.companyName}` }));
-      toast({ title: "CARTA GERADA", description: "A IA gerou a tua carta de motivação." });
+      if (result.hasCv) {
+        setHasCv(true);
+        toast({ title: "CARTA GERADA", description: "A IA utilizou os dados do teu CV para personalizar a carta." });
+      } else {
+        toast({ title: "CARTA GERADA", description: "Carta gerada com sucesso." });
+      }
     } catch (err: any) {
       toast({ title: "ERRO", description: err.message, variant: "destructive" });
     } finally {
@@ -60,7 +69,7 @@ export default function CandidatoCarta() {
         <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#13293D]/50"></div>
       </div>
-      <div className="relative z-10 p-6 md:p-12">
+      <div className="relative z-10 p-6 md:p-12 pt-24 sm:pt-28">
       <div className="max-w-[1000px] mx-auto">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-12">
           <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase">
@@ -73,8 +82,15 @@ export default function CandidatoCarta() {
         </div>
 
         {showForm && (
-          <div className="bg-white/5 border-2 border-[#1B98E0] p-4 sm:p-8 mb-12 shadow-[8px_8px_0px_0px_rgba(36,123,160,0.5)]">
+          <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-[#1B98E0] p-4 sm:p-8 mb-12 shadow-[8px_8px_0px_0px_rgba(36,123,160,0.5)]">
             <h2 className="font-display text-3xl text-[#1B98E0] uppercase mb-6">Gerar com IA</h2>
+
+            {!hasCv && (
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 text-white/60 px-4 py-3 mb-6 text-sm">
+                <Info size={16} /> Faz upload do teu CV para cartas mais personalizadas.
+              </div>
+            )}
+
             <form onSubmit={handleGenerate} className="space-y-6 mb-8">
               <div className="grid md:grid-cols-2 gap-6">
                 <div><label className={labelClass}>EMPRESA</label><input value={form.companyName} onChange={e => setForm({...form, companyName: e.target.value})} placeholder="Ex: Unitel" className={inputClass} /></div>
@@ -109,7 +125,7 @@ export default function CandidatoCarta() {
         ) : (
           <div className="space-y-6">
             {letters.map((l: any) => (
-              <div key={l.id} className="bg-white/5 border-2 border-white/10 p-4 sm:p-8 hover:border-[#1B98E0] transition-colors">
+              <div key={l.id} className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-4 sm:p-8 hover:border-[#1B98E0] transition-colors shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="font-display text-3xl text-white uppercase">{l.title}</h3>

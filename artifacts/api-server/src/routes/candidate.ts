@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { db, cvsTable, jobSearchesTable, matchedJobsTable, coursesTable } from "@workspace/db";
+import { db, cvsTable, jobSearchesTable, matchedJobsTable, coursesTable, coverLettersTable, interviewsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import { requireAuth } from "../lib/auth";
 import { generateRealisticJobs } from "../lib/linkedin";
-import { analyzeSkills, parseCvWithAi, aiMatchJobsToCv, aiAnalyzeAllJobs } from "../lib/groq";
+import { analyzeSkills, parseCvWithAi, aiMatchJobsToCv, aiAnalyzeAllJobs, groqChat, generateCoverLetter } from "../lib/groq";
 
 const router = Router();
 router.use(requireAuth);
@@ -209,6 +209,77 @@ router.get("/candidate/stats", async (req, res) => {
     coursesRecommended: courses.length,
     lastSearchAt: searches.length > 0 ? searches[0].createdAt : null,
   });
+});
+
+router.get("/candidate/cover-letters", async (req, res) => {
+  const user = (req as any).user;
+  const letters = await db.select().from(coverLettersTable).where(eq(coverLettersTable.userId, user.userId)).orderBy(desc(coverLettersTable.createdAt));
+  return res.json(letters);
+});
+
+router.post("/candidate/cover-letters", async (req, res) => {
+  const user = (req as any).user;
+  const { title, content, companyName, position, tone } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ error: "Título e conteúdo são obrigatórios" });
+  }
+  const [letter] = await db.insert(coverLettersTable).values({
+    userId: user.userId,
+    title,
+    content,
+    companyName: companyName || null,
+    position: position || null,
+    tone: tone || "professional",
+  }).returning();
+  return res.status(201).json(letter);
+});
+
+router.delete("/candidate/cover-letters/:id", async (req, res) => {
+  const user = (req as any).user;
+  const id = parseInt(req.params.id);
+  await db.delete(coverLettersTable).where(eq(coverLettersTable.id, id));
+  return res.json({ ok: true });
+});
+
+router.delete("/candidate/interviews/:id", async (req, res) => {
+  const user = (req as any).user;
+  const id = parseInt(req.params.id);
+  await db.delete(interviewsTable).where(eq(interviewsTable.id, id));
+  return res.json({ ok: true });
+});
+
+router.post("/candidate/cover-letters/generate", async (req, res) => {
+  const user = (req as any).user;
+  const { companyName, position, tone } = req.body;
+  if (!companyName || !position) {
+    return res.status(400).json({ error: "Empresa e posição são obrigatórias" });
+  }
+
+  let skills: string[] = [];
+  let experience = "";
+  let education = "";
+  let summary = "";
+
+  const [cv] = await db.select().from(cvsTable).where(eq(cvsTable.userId, user.userId)).orderBy(desc(cvsTable.createdAt)).limit(1);
+  if (cv) {
+    skills = JSON.parse(cv.skills);
+    experience = cv.experience || "";
+    education = cv.education || "";
+    summary = cv.summary || "";
+  }
+
+  try {
+    const content = await generateCoverLetter({
+      jobTitle: position,
+      companyName,
+      skills,
+      experience: experience || summary || "Experiência profissional em diversas áreas.",
+      tone: tone || "professional",
+    });
+    return res.json({ content, hasCv: !!cv });
+  } catch (err: any) {
+    return res.status(500).json({ error: "Erro ao gerar carta: " + err.message });
+  }
 });
 
 export default router;

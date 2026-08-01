@@ -1,8 +1,83 @@
 import { useState } from "react";
-import { Search, MapPin, Sparkles, Brain, Zap, Loader2, CheckCircle, XCircle } from "lucide-react";
+import { Search, MapPin, Sparkles, Brain, Zap, Loader2, CheckCircle, XCircle, BookOpen, ExternalLink } from "lucide-react";
 import { useHasCv } from "@/hooks/use-has-cv";
+import { apiFetch } from "@/lib/auth";
 
-const allJobs = [
+export function linkedInSearchUrl(title: string, company: string): string {
+  return `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(title + " " + company)}&location=Angola&geoUrn=100379283&f_TPR=r604800`;
+}
+
+const companyCareerUrls: Record<string, string> = {
+  "Unitel": "https://www.unitel.ao/empresas",
+  "Banco BFA": "https://www.bfa.ao/carreiras",
+  "Banco BAI": "https://www.bancobai.ao/pt/carreiras",
+  "Banco BIC": "https://www.bancobic.ao/carreiras",
+  "Access Bank Angola": "https://www.accessbankplc.com/careers",
+  "Sonangol": "https://www.sonangol.co.ao/carreiras",
+  "Sonangol P&P": "https://www.sonangol.co.ao/carreiras",
+  "Chevron Angola": "https://careers.chevron.com/",
+  "TotalEnergies": "https://www.totalenergies.com/en/careers",
+  "BP Angola": "https://www.bp.com/en_ao/careers.html",
+  "Angola Telecom": "https://www.angolatelecom.ao",
+  "Movicel": "https://www.movicel.ao",
+  "Grupo Mota-Engil": "https://www.mota-engil.pt/en/careers",
+  "Odebrecht Angola": "https://www.notredameintermed.com/careers",
+  "NVS Energy": "https://www.nvsenergy.com",
+  "Endiama": "https://www.endiama.co.ao",
+  "iGrow": "https://www.linkedin.com/jobs/search/?keywords=iGrow+Angola",
+  "AfriTech": "https://www.linkedin.com/jobs/search/?keywords=AfriTech+Angola",
+  "Multichoice Angola": "https://www.multichoice.com/careers/",
+  "Hospital da Luz": "https://www.hospitaldaluz.pt/angola",
+  "Clínica Girassol": "https://www.linkedin.com/jobs/search/?keywords=Clinica+Girassol+Luanda",
+  "Grupo Zahara": "https://www.linkedin.com/jobs/search/?keywords=Grupo+Zahara+Angola",
+  "Grupo Nzerembwe": "https://www.linkedin.com/jobs/search/?keywords=Grupo+Nzerembwe",
+  "STA Seguros": "https://www.linkedin.com/jobs/search/?keywords=STA+Seguros+Angola",
+  "Webmasters": "https://www.linkedin.com/jobs/search/?keywords=Webmasters+Angola",
+  "PEP Angola": "https://www.pepstores.com/careers",
+  "Nelt Angola": "https://www.nelt.co.rs/en/careers/",
+  "Kero Supermercado": "https://www.kero.ao/carreiras",
+  "Coca-Cola Angola": "https://www.coca-colacompany.com/careers",
+  "CNI": "https://www.linkedin.com/jobs/search/?keywords=CNI+Angola",
+  "CNI Centro de Negócios": "https://www.linkedin.com/jobs/search/?keywords=CNI+Centro+de+Negocios",
+  "Training Key": "https://www.linkedin.com/jobs/search/?keywords=Training+Key+Angola",
+  "Reis International": "https://www.linkedin.com/jobs/search/?keywords=Reis+International+Angola",
+  "Reis International School": "https://www.linkedin.com/jobs/search/?keywords=Reis+International+School",
+  "Twala Technology": "https://www.linkedin.com/jobs/search/?keywords=Twala+Technology+Angola",
+  "Mitrelli": "https://www.mitrelli.com/careers",
+  "Teixeira Duarte": "https://www.teixeiraduarte.com/en/careers",
+  "Lancet Angola": "https://www.lancet.co.za/careers",
+  "Expertise France": "https://www.expertisefrance.fr/en/careers",
+  "ISPOCA": "https://www.linkedin.com/jobs/search/?keywords=ISPOCA+Angola",
+  "TPA": "https://www.tpa.ao",
+  "TV Zimbo": "https://www.tvzimbo.ao",
+  "Quinta de Jugais": "https://www.linkedin.com/jobs/search/?keywords=Quinta+de+Jugais",
+  "Don Gal Hotel": "https://www.linkedin.com/jobs/search/?keywords=Don+Gal+Hotel+Luanda",
+  "Hotel Epicur": "https://www.linkedin.com/jobs/search/?keywords=Hotel+Epicur+Luanda",
+  "Talatona Convention": "https://www.linkedin.com/jobs/search/?keywords=Talatona+Convention+Luanda",
+  "Hotel Infotur": "https://www.linkedin.com/jobs/search/?keywords=Hotel+Infotur+Lubango",
+  "Chivava Beach Hotel": "https://www.linkedin.com/jobs/search/?keywords=Chivava+Beach+Hotel",
+  "Hotel Kito": "https://www.linkedin.com/jobs/search/?keywords=Hotel+Kito+Huambo",
+  "Farmácia Modelo": "https://www.linkedin.com/jobs/search/?keywords=Farmacia+Modelo+Angola",
+  "Farmácia Central": "https://www.linkedin.com/jobs/search/?keywords=Farmacia+Central+Lubango",
+  "HRM Consulting": "https://www.linkedin.com/jobs/search/?keywords=HRM+Consulting+Angola",
+  "Universidade Católica de Angola": "https://www.ucan.ao",
+  "MM Oliveira": "https://www.linkedin.com/jobs/search/?keywords=MM+Oliveira+Angola",
+  "WSTP": "https://www.linkedin.com/jobs/search/?keywords=WSTP+Angola",
+  "Kept People": "https://www.linkedin.com/jobs/search/?keywords=Kept+People+Angola",
+  "CRHESCER": "https://www.linkedin.com/jobs/search/?keywords=CRHESCER+Angola",
+  "Transpt": "https://www.linkedin.com/jobs/search/?keywords=Transpt+Angola",
+  "Novagest": "https://www.linkedin.com/jobs/search/?keywords=Novagest+Angola",
+  "ACQUA Global": "https://www.linkedin.com/jobs/search/?keywords=ACQUA+Global+Angola",
+  "Escola Camilo Castelo Branco": "https://www.linkedin.com/jobs/search/?keywords=Escola+Camilo+Castelo+Branco",
+  "Liceu Kakulo": "https://www.linkedin.com/jobs/search/?keywords=Liceu+Kakulo+Benguela",
+  "Liceu Municipal": "https://www.linkedin.com/jobs/search/?keywords=Liceu+Municipal+Huambo",
+};
+
+export function getJobUrl(title: string, company: string): string {
+  return companyCareerUrls[company] || linkedInSearchUrl(title, company);
+}
+
+export const allJobs = [
   // TECNOLOGIA
   { id: 1, title: "Engenheiro de Software Sénior", company: "Unitel", location: "Luanda", type: "Híbrido", category: "Tecnologia", salary: "350 000 – 500 000 Kz", skills: ["React", "Node.js", "PostgreSQL"], featured: true, logo: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=100&q=80" },
   { id: 2, title: "Analista de Dados", company: "Banco BFA", location: "Luanda", type: "Híbrido", category: "Tecnologia", salary: "280 000 – 380 000 Kz", skills: ["Python", "SQL", "Power BI"], featured: false, logo: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&w=100&q=80" },
@@ -169,6 +244,76 @@ const provinces = ["Todas", "Luanda", "Benguela", "Huambo", "Cabinda", "Lubango"
 const categories = ["Todos", "Tecnologia", "Finanças", "Construção", "Petróleo & Gás", "Telecomunicações", "Media", "Saúde", "Educação", "Hotelaria", "Logística", "Comércio", "Recursos Humanos", "Engenharia", "Negócios", "Alimentação", "Elétrica", "Operações", "Social", "Transporte", "Banca"];
 const workTypes = ["Todos", "Presencial", "Híbrido", "Remoto"];
 
+const miniCourses = [
+  { id: 1, skill: "Informática", title: "Manutenção de Computadores e Redes", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", free: true },
+  { id: 2, skill: "Electricidade", title: "Electricidade Geral e Instalações", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "4 meses", free: true },
+  { id: 3, skill: "Mecânica", title: "Mecânica Automóvel e Diesel", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "6 meses", free: true },
+  { id: 4, skill: "Cibersegurança", title: "Cibersegurança e Firewalls", provider: "INESCOI", url: "https://www.inescoi.ao", duration: "40 horas", free: false },
+  { id: 5, skill: "Compliance", title: "Compliance Officer", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/Compliance-Officer", duration: "40 horas", free: false },
+  { id: 6, skill: "Gestão de Riscos", title: "Gestão de Riscos Corporativos", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/gestao-de-riscos", duration: "40 horas", free: false },
+  { id: 7, skill: "Auditoria", title: "Controlo Interno e Auditoria", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/controlo-interno-e-auditoria", duration: "40 horas", free: false },
+  { id: 8, skill: "Banca", title: "Banca e Sistema Financeiro", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/banca-e-sistema-financeiro", duration: "20 horas", free: false },
+  { id: 9, skill: "AML", title: "Prevenção do Branqueamento de Capitais", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/prevencao-do-branqueamento-de-capitais-bcft", duration: "20 horas", free: false },
+  { id: 10, skill: "ESG", title: "ESG e Sustentabilidade Corporativa", provider: "INESCOI", url: "https://www.inescoi.ao/formacoes/esg-e-sustentabilidade-corporativa", duration: "40 horas", free: false },
+  { id: 11, skill: "Excel", title: "Excel em 1 Hora — Fórmulas Essenciais", provider: "CursosAngola", url: "https://cursosangola.com", duration: "1h", free: true },
+  { id: 12, skill: "WordPress", title: "WordPress com Elementor", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h 41min", free: true },
+  { id: 13, skill: "Inteligência Artificial", title: "Produtos Digitais com IA + Canva", provider: "CursosAngola", url: "https://cursosangola.com", duration: "15min", free: true },
+  { id: 14, skill: "HSE", title: "HSE — Higiene, Segurança e Ambiente", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "40 horas", free: false },
+  { id: 15, skill: "Gestão de Projectos", title: "Gestão de Projectos (PMP)", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "40 horas", free: false },
+  { id: 16, skill: "Liderança", title: "Liderança e Gestão de Equipas", provider: "NEP Training", url: "http://www.neptraining.ao/", duration: "20 horas", free: false },
+  { id: 17, skill: "Engenharia Informática", title: "Engenharia Informática", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", free: false },
+  { id: 18, skill: "Gestão", title: "Gestão de Empresas", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", free: false },
+  { id: 19, skill: "Direito", title: "Direito", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", free: false },
+  { id: 20, skill: "Contabilidade", title: "Gestão Financeira e Contabilidade", provider: "ISPA", url: "https://ispatlantida.co.ao/", duration: "4 anos", free: false },
+  { id: 21, skill: "Engenharia Civil", title: "Engenharia Civil", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", free: true },
+  { id: 22, skill: "Engenharia Electrónica", title: "Engenharia Electrónica e Telecomunicações", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", free: true },
+  { id: 23, skill: "Engenharia Mecânica", title: "Engenharia Mecânica", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", free: true },
+  { id: 24, skill: "Engenharia de Minas", title: "Engenharia de Minas", provider: "UAN", url: "https://fe.uan.ao/", duration: "5 anos", free: true },
+  { id: 25, skill: "Direito", title: "Direito", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", free: false },
+  { id: 26, skill: "Gestão", title: "Gestão e Negócios Internacionais", provider: "UnIA", url: "https://unia.ao/licenciaturas/", duration: "4 anos", free: false },
+  { id: 27, skill: "Relações Públicas", title: "Relações Públicas e Comunicação", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", free: false },
+  { id: 28, skill: "Contabilidade", title: "Contabilidade", provider: "IMETRO", url: "http://imetroangola.com/", duration: "4 anos", free: false },
+  { id: 29, skill: "Redes", title: "Manutenção de Computadores e Redes", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", free: true },
+  { id: 30, skill: "Suporte", title: "Suporte Técnico de Informática", provider: "INEFOP", url: "https://www.inefop.gov.ao", duration: "3 meses", free: true },
+  { id: 31, skill: "SQL", title: "Base de Dados e SQL", provider: "CursosAngola", url: "https://cursosangola.com", duration: "2h", free: true },
+  { id: 32, skill: "Python", title: "Python Fundamentos", provider: "CursosAngola", url: "https://cursosangola.com", duration: "4h", free: true },
+  { id: 33, skill: "Power BI", title: "Power BI — Dashboards e Relatórios", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", free: true },
+  { id: 34, skill: "Figma", title: "Design de Interfaces com Figma", provider: "CursosAngola", url: "https://cursosangola.com", duration: "2h", free: true },
+  { id: 35, skill: "AWS", title: "AWS Cloud Concepts", provider: "CursosAngola", url: "https://cursosangola.com", duration: "3h", free: true },
+  { id: 36, skill: "Docker", title: "Docker e Containers", provider: "CursosAngola", url: "https://cursosangola.com", duration: "2h", free: true },
+  { id: 37, skill: "Formação Profissional", title: "Formações Empresariais", provider: "GetTraining", url: "https://get-ao.com/cursos", duration: "Variável", free: false },
+  { id: 38, skill: "Contabilidade", title: "Contabilidade", provider: "Universidade Católica de Angola", url: "https://www.ucan.ao", duration: "4 anos", free: false },
+  { id: 39, skill: "Gestão", title: "Administração e Gestão", provider: "Universidade Lusíada de Angola", url: "https://www.ulusiana.ao", duration: "4 anos", free: false },
+  { id: 40, skill: "Engenharia Informática", title: "Engenharia Informática", provider: "Universidade Lusíada de Angola", url: "https://www.ulusiana.ao", duration: "4 anos", free: false },
+];
+
+function matchJobSkills(cvSkills: string[], jobSkills: string[]) {
+  const matched: string[] = [];
+  const gaps: string[] = [];
+  for (const js of jobSkills) {
+    const found = cvSkills.some(cs =>
+      cs.toLowerCase().includes(js.toLowerCase()) ||
+      js.toLowerCase().includes(cs.toLowerCase()) ||
+      cs.toLowerCase() === js.toLowerCase()
+    );
+    if (found) matched.push(js);
+    else gaps.push(js);
+  }
+  return { matched, gaps };
+}
+
+function findCourses(gaps: string[]) {
+  const found: typeof miniCourses = [];
+  for (const gap of gaps) {
+    for (const c of miniCourses) {
+      if ((c.skill.toLowerCase().includes(gap.toLowerCase()) || gap.toLowerCase().includes(c.skill.toLowerCase()) || c.title.toLowerCase().includes(gap.toLowerCase())) && !found.find(f => f.id === c.id)) {
+        found.push(c);
+      }
+    }
+  }
+  return found;
+}
+
 interface AiMatch {
   title: string;
   company: string;
@@ -190,11 +335,11 @@ interface AiAnalysis {
 function AiMatchCard({ match }: { match: AiMatch }) {
   const job = allJobs.find(j => j.title === match.title && j.company === match.company);
   return (
-    <div className="bg-white/5 border-2 border-white/10 p-6 hover:border-[#1B98E0] transition-colors group relative flex flex-col">
+    <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-6 hover:border-[#1B98E0] transition-colors group relative flex flex-col shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
       <div className="flex items-center gap-3 mb-4">
         {job && <img src={job.logo} alt={match.company} className="w-12 h-12 rounded-lg object-cover border border-white/10" />}
         <div>
-          <span className="text-white/80 text-sm font-bold block">{match.company}</span>
+          <span className="text-white text-sm font-bold block">{match.company}</span>
           <span className={`text-xs font-bold px-2 py-0.5 ${match.matchScore >= 70 ? "bg-emerald-500/20 text-emerald-400" : match.matchScore >= 40 ? "bg-amber-500/20 text-amber-400" : "bg-red-500/20 text-red-400"}`}>
             {match.matchScore}% match
           </span>
@@ -223,9 +368,10 @@ function AiMatchCard({ match }: { match: AiMatch }) {
         </div>
       )}
       <div className="mt-auto">
-        <button className="w-full bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] px-4 py-2 font-bold text-xs uppercase transition-colors shadow-[3px_3px_0px_0px_rgba(36,123,160,1)]">
-          Candidatar-me
-        </button>
+        <a href={getJobUrl(match.title, match.company)} target="_blank" rel="noopener noreferrer"
+          className="block w-full bg-[#1B98E0] hover:bg-[#247BA0] text-white px-4 py-2 font-bold text-xs uppercase transition-colors shadow-[3px_3px_0px_0px_rgba(36,123,160,1)] text-center">
+          <ExternalLink size={12} className="inline mr-1" /> Candidatar-me
+        </a>
       </div>
     </div>
   );
@@ -234,14 +380,14 @@ function AiMatchCard({ match }: { match: AiMatch }) {
 function AiAnalysisCard({ analysis }: { analysis: AiAnalysis }) {
   const job = allJobs.find(j => j.title === analysis.title && j.company === analysis.company);
   return (
-    <div className="bg-white/5 border-2 border-white/10 p-6 hover:border-[#1B98E0] transition-colors group relative flex flex-col">
+    <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-6 hover:border-[#1B98E0] transition-colors group relative flex flex-col shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
       {job?.featured && (
         <div className="absolute top-0 right-0 bg-[#1B98E0] text-[#13293D] px-4 py-1 font-bold text-xs uppercase tracking-widest">Destaque</div>
       )}
       <div className="flex items-center gap-3 mb-4">
         {job && <img src={job.logo} alt={analysis.company} className="w-12 h-12 rounded-lg object-cover border border-white/10" />}
         <div>
-          <span className="text-white/80 text-sm font-bold block">{analysis.company}</span>
+          <span className="text-white text-sm font-bold block">{analysis.company}</span>
           <span className={`text-xs font-bold px-2 py-0.5 ${analysis.demandScore >= 70 ? "bg-emerald-500/20 text-emerald-400" : analysis.demandScore >= 40 ? "bg-amber-500/20 text-amber-400" : "bg-red-500/20 text-red-400"}`}>
             {analysis.trend}
           </span>
@@ -268,20 +414,22 @@ function AiAnalysisCard({ analysis }: { analysis: AiAnalysis }) {
         </div>
       )}
       <div className="mt-auto">
-        <button className="w-full bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] px-4 py-2 font-bold text-xs uppercase transition-colors shadow-[3px_3px_0px_0px_rgba(36,123,160,1)]">
-          Candidatar-me
-        </button>
+        <a href={getJobUrl(analysis.title, analysis.company)} target="_blank" rel="noopener noreferrer"
+          className="block w-full bg-[#1B98E0] hover:bg-[#247BA0] text-white px-4 py-2 font-bold text-xs uppercase transition-colors shadow-[3px_3px_0px_0px_rgba(36,123,160,1)] text-center">
+          <ExternalLink size={12} className="inline mr-1" /> Candidatar-me
+        </a>
       </div>
     </div>
   );
 }
 
 export default function CandidatoVagas() {
-  const { hasCv } = useHasCv();
+  const { hasCv, cvSkills } = useHasCv();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Todos");
   const [workType, setWorkType] = useState("Todos");
   const [province, setProvince] = useState("Todas");
+  const [expandedJobId, setExpandedJobId] = useState<number | null>(null);
 
   const [aiMode, setAiMode] = useState<"idle" | "cv" | "general">("idle");
   const [aiLoading, setAiLoading] = useState(false);
@@ -304,16 +452,10 @@ export default function CandidatoVagas() {
     setAiError(null);
     setAiAnalysisResults([]);
     try {
-      const res = await fetch("/api/candidate/jobs/ai-match", {
+      const data = await apiFetch("/api/candidate/jobs/ai-match", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jobs: allJobs.map(j => ({ title: j.title, company: j.company, skills: j.skills, salary: j.salary, location: j.location, category: j.category })) }),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Erro ao analisar vagas");
-      }
-      const data = await res.json();
       setAiMatchResults(data);
     } catch (err: any) {
       setAiError(err.message);
@@ -328,16 +470,10 @@ export default function CandidatoVagas() {
     setAiError(null);
     setAiMatchResults([]);
     try {
-      const res = await fetch("/api/candidate/jobs/ai-analyze", {
+      const data = await apiFetch("/api/candidate/jobs/ai-analyze", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jobs: allJobs.map(j => ({ title: j.title, company: j.company, skills: j.skills, salary: j.salary, location: j.location, category: j.category })) }),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Erro ao analisar vagas");
-      }
-      const data = await res.json();
       setAiAnalysisResults(data);
     } catch (err: any) {
       setAiError(err.message);
@@ -359,7 +495,7 @@ export default function CandidatoVagas() {
         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#13293D]/70"></div>
       </div>
-      <div className="relative z-10 p-6 md:p-12">
+      <div className="relative z-10 p-6 md:p-12 pt-24 sm:pt-28">
       <div className="max-w-[1400px] mx-auto">
         <h1 className="font-display text-4xl sm:text-6xl md:text-8xl text-white uppercase mb-4">
           Buscar <span className="text-[#1B98E0]">Vagas</span>
@@ -490,38 +626,113 @@ export default function CandidatoVagas() {
             <p className="text-white/40 text-sm mb-8 font-bold">{filtered.length} vagas encontradas</p>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map(job => (
-                <div key={job.id} className="bg-white/5 border-2 border-white/10 p-6 hover:border-[#1B98E0] transition-colors group relative flex flex-col">
+              {filtered.map(job => {
+                const { matched, gaps } = hasCv && cvSkills.length > 0 ? matchJobSkills(cvSkills, job.skills) : { matched: [], gaps: [] };
+                const matchPercent = job.skills.length > 0 ? Math.round((matched.length / job.skills.length) * 100) : 0;
+                const courses = gaps.length > 0 ? findCourses(gaps) : [];
+                const isExpanded = expandedJobId === job.id;
+
+                return (
+                <div key={job.id} className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-6 hover:border-[#1B98E0] transition-colors group relative flex flex-col shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">
                   {job.featured && (
-                    <div className="absolute top-0 right-0 bg-[#1B98E0] text-[#13293D] px-4 py-1 font-bold text-xs uppercase tracking-widest">Destaque</div>
+                    <div className="absolute top-0 right-0 bg-white text-[#13293D] px-4 py-1 font-bold text-xs uppercase tracking-widest">Destaque</div>
                   )}
                   <div className="flex items-center gap-3 mb-4">
-                    <img src={job.logo} alt={job.company} className="w-12 h-12 rounded-lg object-cover border border-white/10" />
+                    <img src={job.logo} alt={job.company} className="w-12 h-12 rounded-lg object-cover border border-white/20" />
                     <div>
-                      <span className="text-white/80 text-sm font-bold block">{job.company}</span>
-                      <span className="text-xs uppercase font-bold tracking-wider text-[#247BA0]">{job.category}</span>
+                      <span className="text-white text-sm font-bold block">{job.company}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs uppercase font-bold tracking-wider text-white/70">{job.category}</span>
+                        {hasCv && cvSkills.length > 0 && (
+                          <span className={`text-xs font-bold px-2 py-0.5 ${matchPercent >= 70 ? "bg-emerald-500/20 text-emerald-400" : matchPercent >= 40 ? "bg-amber-500/20 text-amber-400" : "bg-red-500/20 text-red-400"}`}>
+                            {matchPercent}%
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <h3 className="font-display text-xl uppercase mb-2 group-hover:text-[#1B98E0] transition-colors">{job.title}</h3>
-                  <div className="flex items-center gap-2 text-white/40 text-sm mb-3">
+                  <h3 className="font-display text-xl uppercase mb-2 text-white transition-colors">{job.title}</h3>
+                  <div className="flex items-center gap-2 text-white/60 text-sm mb-3">
                     <MapPin size={14} /> {job.location}
                   </div>
                   <div className="mb-4">
-                    <span className={`inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider ${job.type === "Remoto" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : job.type === "Híbrido" ? "bg-blue-500/20 text-blue-400 border border-blue-500/30" : "bg-[#247BA0]/20 text-[#247BA0] border border-[#247BA0]/30"}`}>{job.type}</span>
+                    <span className={`inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider ${job.type === "Remoto" ? "bg-emerald-400/20 text-white border border-white/20" : job.type === "Híbrido" ? "bg-white/20 text-white border border-white/20" : "bg-white/10 text-white border border-white/20"}`}>{job.type}</span>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {job.skills.map(s => (
-                      <span key={s} className="text-xs border border-[#1B98E0] text-[#1B98E0] px-2 py-1 uppercase font-bold">{s}</span>
-                    ))}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {job.skills.map(s => {
+                      const isMatched = matched.includes(s);
+                      const isGap = gaps.includes(s);
+                      return (
+                        <span key={s} className={`text-xs px-2 py-1 uppercase font-bold border ${
+                          isMatched ? "border-emerald-500/50 text-emerald-400 bg-emerald-500/10" :
+                          isGap ? "border-red-500/50 text-red-400 bg-red-500/10" :
+                          "border-white/30 text-white"
+                        }`}>
+                          {isMatched && <CheckCircle size={10} className="inline mr-0.5" />}
+                          {isGap && <XCircle size={10} className="inline mr-0.5" />}
+                          {s}
+                        </span>
+                      );
+                    })}
                   </div>
-                  <div className="mt-auto flex items-center justify-between">
-                    <p className="font-display text-sm text-[#1B98E0]">{job.salary}</p>
-                    <button className="bg-[#1B98E0] hover:bg-[#247BA0] text-[#13293D] px-4 py-2 font-bold text-xs uppercase transition-colors shadow-[3px_3px_0px_0px_rgba(36,123,160,1)]">
-                      Candidatar-me
-                    </button>
+                  <div className="mt-auto flex items-center justify-between mb-3">
+                    <p className="font-display text-sm text-white font-bold">{job.salary}</p>
+                    {hasCv && cvSkills.length > 0 && (matched.length > 0 || gaps.length > 0) && (
+                      <button onClick={() => setExpandedJobId(isExpanded ? null : job.id)}
+                        className="text-[#247BA0] hover:text-[#1B98E0] text-xs font-bold uppercase flex items-center gap-1 transition-colors">
+                        <Sparkles size={12} /> {isExpanded ? "Fechar" : "Análise"}
+                      </button>
+                    )}
                   </div>
+                  <a href={getJobUrl(job.title, job.company)} target="_blank" rel="noopener noreferrer"
+                    className="block w-full bg-[#1B98E0] hover:bg-[#247BA0] text-white px-4 py-2 font-bold text-xs uppercase transition-colors shadow-[3px_3px_0px_0px_rgba(36,123,160,1)] text-center">
+                    <ExternalLink size={12} className="inline mr-1" /> Candidatar-me
+                  </a>
+
+                  {isExpanded && hasCv && cvSkills.length > 0 && (matched.length > 0 || gaps.length > 0) && (
+                    <div className="mt-4 pt-4 border-t border-white/10 space-y-3">
+                      {matched.length > 0 && (
+                        <div>
+                          <p className="text-emerald-400 text-xs font-bold uppercase mb-1">Competências que tens ({matched.length})</p>
+                          <div className="flex flex-wrap gap-1">
+                            {matched.map(s => (
+                              <span key={s} className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-2 py-0.5 text-xs font-bold uppercase">{s}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {gaps.length > 0 && (
+                        <div>
+                          <p className="text-red-400 text-xs font-bold uppercase mb-1">Em falta ({gaps.length})</p>
+                          <div className="flex flex-wrap gap-1">
+                            {gaps.map(s => (
+                              <span key={s} className="bg-red-500/10 border border-red-500/30 text-red-400 px-2 py-0.5 text-xs font-bold uppercase">{s}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {courses.length > 0 && (
+                        <div>
+                          <p className="text-[#1B98E0] text-xs font-bold uppercase mb-1 flex items-center gap-1"><BookOpen size={10} /> Cursos recomendados</p>
+                          <div className="space-y-1">
+                            {courses.slice(0, 3).map(c => (
+                              <a key={c.id} href={c.url} target="_blank" rel="noopener"
+                                className="flex items-center justify-between bg-[#13293D]/80 border border-white/10 p-2 hover:border-[#1B98E0] transition-colors group/course">
+                                <div>
+                                  <p className="text-white text-xs font-bold group-hover/course:text-[#1B98E0]">{c.title}</p>
+                                  <p className="text-white/30 text-[10px]">{c.provider} — {c.duration} {c.free && "• GRATUITO"}</p>
+                                </div>
+                                <ExternalLink size={10} className="text-[#247BA0] shrink-0" />
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

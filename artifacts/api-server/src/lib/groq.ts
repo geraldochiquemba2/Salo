@@ -345,14 +345,20 @@ Responde APENAS com JSON array (sem markdown), ordenado por matchScore descenden
       return results.map(r => ({
         title: r.title || "",
         company: r.company || "",
-        matchScore: Math.min(100, Math.max(0, r.matchScore || 50)),
+        matchScore: Math.min(100, Math.max(0, typeof r.matchScore === "number" ? r.matchScore : 50)),
         reason: r.reason || "",
         strengths: Array.isArray(r.strengths) ? r.strengths.slice(0, 3) : [],
         gaps: Array.isArray(r.gaps) ? r.gaps.slice(0, 3) : [],
       }));
     }
   } catch {}
-  return jobs.map(j => ({ title: j.title, company: j.company, matchScore: 50, reason: "Análise automática", strengths: cvSkills.slice(0, 2), gaps: j.skills.slice(0, 2) }));
+  return jobs.map(j => {
+    const matchingSkills = cvSkills.filter(s =>
+      j.skills.some(js => js.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(js.toLowerCase()))
+    );
+    const score = j.skills.length > 0 ? Math.round((matchingSkills.length / j.skills.length) * 100) : 30;
+    return { title: j.title, company: j.company, matchScore: score, reason: `${matchingSkills.length}/${j.skills.length} competências correspondentes`, strengths: matchingSkills.slice(0, 3), gaps: j.skills.filter(s => !matchingSkills.some(m => m.toLowerCase() === s.toLowerCase())).slice(0, 3) };
+  });
 }
 
 export async function aiAnalyzeAllJobs(jobs: { title: string; company: string; skills: string[]; salary: string; location: string; category: string }[]): Promise<{ title: string; company: string; demandScore: number; trend: string; salaryInsight: string; topSkills: string[] }[]> {

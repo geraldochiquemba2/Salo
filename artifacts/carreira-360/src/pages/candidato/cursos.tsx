@@ -62,7 +62,7 @@ const skillCategories = ["Todos", "Informática", "Engenharia", "Gestão", "Dire
 function CourseCard({ c }: { c: typeof allCourses[0] }) {
   return (
     <a key={c.id} href={c.url} target="_blank" rel="noopener"
-      className="block bg-white/5 border-2 border-white/10 p-4 sm:p-8 hover:border-[#1B98E0] transition-colors group relative">
+      className="block bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-4 sm:p-8 hover:border-[#1B98E0] transition-colors group relative shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]">
       {c.angolan && (
         <div className="absolute top-0 right-0 bg-[#247BA0] text-white px-3 py-1 font-bold text-xs uppercase tracking-widest flex items-center gap-1">
           <Star size={10} fill="currentColor" /> Angola
@@ -129,8 +129,13 @@ export default function CandidatoCursos() {
 
         {showSection === "recommended" && hasCv && hasRecommendations ? (
           <div>
-            <div className="mb-6">
-              <p className="text-[#1B98E0] text-sm uppercase font-bold tracking-widest mb-3">Baseado nas tuas competências: {cvSkills.join(", ")}</p>
+            <div className="mb-6 bg-[#13293D]/90 backdrop-blur-sm border-2 border-[#1B98E0] p-6 shadow-[8px_8px_0px_0px_rgba(36,123,160,0.3)]">
+              <p className="text-[#1B98E0] text-sm uppercase font-bold tracking-widest mb-3">Baseado nas tuas competências:</p>
+              <div className="flex flex-wrap gap-2">
+                {cvSkills.map((s, i) => (
+                  <span key={i} className="bg-[#1B98E0]/10 border border-[#1B98E0]/30 text-[#1B98E0] px-3 py-1.5 text-sm font-bold uppercase">{s}</span>
+                ))}
+              </div>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {recommended.map(c => <CourseCard key={c.id} c={c} />)}

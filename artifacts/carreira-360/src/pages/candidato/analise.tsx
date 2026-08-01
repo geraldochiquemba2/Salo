@@ -27,12 +27,12 @@ export default function CandidatoAnalise() {
         </h1>
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white/5 border-2 border-[#1B98E0] p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(36,123,160,0.5)]">
+          <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-[#1B98E0] p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(36,123,160,0.5)]">
             <Target size={32} className="text-[#1B98E0] mb-4" />
             <p className="font-display text-5xl sm:text-7xl text-[#1B98E0]">{analysis.overallMatchScore}%</p>
             <p className="text-white/50 uppercase font-bold text-sm mt-2">Score Geral</p>
           </div>
-          <div className="bg-white/5 border-2 border-green-500 p-4 sm:p-8">
+          <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-green-500 p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(34,197,94,0.3)]">
             <TrendingUp size={32} className="text-green-500 mb-4" />
             <p className="font-display text-2xl sm:text-4xl text-white mb-2">COMPETÊNCIAS FORTES</p>
             <div className="flex flex-wrap gap-2 mt-4">
@@ -41,7 +41,7 @@ export default function CandidatoAnalise() {
               ))}
             </div>
           </div>
-          <div className="bg-white/5 border-2 border-[#247BA0] p-4 sm:p-8">
+          <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-[#247BA0] p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(36,123,160,0.3)]">
             <TrendingDown size={32} className="text-[#247BA0] mb-4" />
             <p className="font-display text-2xl sm:text-4xl text-white mb-2">SKILLS EM FALTA</p>
             <div className="flex flex-wrap gap-2 mt-4">
@@ -53,7 +53,7 @@ export default function CandidatoAnalise() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white/5 border-2 border-white/10 p-4 sm:p-8">
+          <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]">
             <h2 className="font-display text-2xl sm:text-4xl text-[#1B98E0] uppercase mb-6">Cargos Recomendados</h2>
             <div className="space-y-4">
               {(analysis.recommendedRoles || []).map((r: string, i: number) => (
@@ -64,7 +64,7 @@ export default function CandidatoAnalise() {
               ))}
             </div>
           </div>
-          <div className="bg-white/5 border-2 border-white/10 p-4 sm:p-8">
+          <div className="bg-[#13293D]/90 backdrop-blur-sm border-2 border-white/20 p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(255,255,255,0.1)]">
             <h2 className="font-display text-2xl sm:text-4xl text-[#1B98E0] uppercase mb-6">Demanda de Mercado</h2>
             <div className="space-y-4">
               {Object.entries(analysis.marketDemand || {}).slice(0, 8).map(([skill, score]) => (
