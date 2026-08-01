@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, ExternalLink, Clock, Award, Star, Sparkles } from "lucide-react";
+import { BookOpen, ExternalLink, Clock, Award, Star, Sparkles, SlidersHorizontal } from "lucide-react";
 import { useHasCv } from "@/hooks/use-has-cv";
 
 const allCourses = [
@@ -119,6 +119,7 @@ export default function CandidatoCursos() {
   const { hasCv, cvSkills } = useHasCv();
   const [skill, setSkill] = useState("Todos");
   const [showSection, setShowSection] = useState<"all" | "recommended">("all");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const filtered = allCourses.filter(c => skill === "Todos" || c.skill === skill);
 
@@ -174,14 +175,20 @@ export default function CandidatoCursos() {
         ) : (
           <div>
             <div className="mb-8">
-              <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Filtrar por área</p>
-              <div className="flex flex-wrap gap-2">
-                {skillCategories.map(s => (
-                  <button key={s} onClick={() => setSkill(s)}
-                    className={`px-5 py-2.5 font-bold text-sm uppercase tracking-wider transition-colors ${skill === s ? "bg-[#1B98E0] text-[#13293D]" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
-                    {s}
-                  </button>
-                ))}
+              <button onClick={() => setFiltersOpen(!filtersOpen)}
+                className="flex items-center gap-2 px-5 py-2.5 font-bold text-sm uppercase tracking-wider bg-white/5 text-white/60 hover:text-white border border-white/10 transition-colors md:hidden">
+                <SlidersHorizontal size={16} /> Filtros {skill !== "Todos" && <span className="bg-[#1B98E0] text-[#13293D] px-2 py-0.5 text-xs">{skill}</span>}
+              </button>
+              <div className={`${filtersOpen ? "block" : "hidden"} md:block mt-3`}>
+                <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Filtrar por área</p>
+                <div className="flex flex-wrap gap-2">
+                  {skillCategories.map(s => (
+                    <button key={s} onClick={() => { setSkill(s); if (window.innerWidth < 768) setFiltersOpen(false); }}
+                      className={`px-5 py-2.5 font-bold text-sm uppercase tracking-wider transition-colors ${skill === s ? "bg-[#1B98E0] text-[#13293D]" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 

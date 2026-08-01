@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, MapPin, Sparkles, Brain, Zap, Loader2, CheckCircle, XCircle, BookOpen, ExternalLink } from "lucide-react";
+import { Search, MapPin, Sparkles, Brain, Zap, Loader2, CheckCircle, XCircle, BookOpen, ExternalLink, SlidersHorizontal } from "lucide-react";
 import { useHasCv } from "@/hooks/use-has-cv";
 import { apiFetch } from "@/lib/auth";
 
@@ -430,6 +430,7 @@ export default function CandidatoVagas() {
   const [workType, setWorkType] = useState("Todos");
   const [province, setProvince] = useState("Todas");
   const [expandedJobId, setExpandedJobId] = useState<number | null>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const [aiMode, setAiMode] = useState<"idle" | "cv" | "general">("idle");
   const [aiLoading, setAiLoading] = useState(false);
@@ -587,39 +588,52 @@ export default function CandidatoVagas() {
                 className="w-full bg-white/5 border-2 border-white/10 text-white h-16 pl-16 pr-6 text-lg focus:border-[#1B98E0] focus:outline-none rounded-none placeholder:text-white/30" />
             </div>
 
-            <div className="mb-4">
-              <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Província</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {provinces.map(p => (
-                  <button key={p} onClick={() => setProvince(p)}
-                    className={`px-4 py-2 font-bold text-xs uppercase tracking-wider transition-colors ${province === p ? "bg-emerald-600 text-white" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
-                    {p}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <div className="mb-6">
+              <button onClick={() => setFiltersOpen(!filtersOpen)}
+                className="flex items-center gap-2 px-5 py-2.5 font-bold text-sm uppercase tracking-wider bg-white/5 text-white/60 hover:text-white border border-white/10 transition-colors md:hidden">
+                <SlidersHorizontal size={16} /> Filtros
+                {(province !== "Todas" || category !== "Todos" || workType !== "Todos") && (
+                  <span className="bg-[#1B98E0] text-[#13293D] px-2 py-0.5 text-xs">
+                    {[province !== "Todas" ? province : "", category !== "Todos" ? category : "", workType !== "Todos" ? workType : ""].filter(Boolean).join(", ")}
+                  </span>
+                )}
+              </button>
+              <div className={`${filtersOpen ? "block" : "hidden"} md:block mt-3 space-y-4`}>
+                <div>
+                  <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Província</p>
+                  <div className="flex flex-wrap gap-2">
+                    {provinces.map(p => (
+                      <button key={p} onClick={() => setProvince(p)}
+                        className={`px-4 py-2 font-bold text-xs uppercase tracking-wider transition-colors ${province === p ? "bg-emerald-600 text-white" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
+                        {p}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            <div className="mb-4">
-              <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Categoria</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {categories.map(c => (
-                  <button key={c} onClick={() => setCategory(c)}
-                    className={`px-4 py-2 font-bold text-xs uppercase tracking-wider transition-colors ${category === c ? "bg-[#1B98E0] text-[#13293D]" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
-                    {c}
-                  </button>
-                ))}
-              </div>
-            </div>
+                <div>
+                  <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Categoria</p>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map(c => (
+                      <button key={c} onClick={() => setCategory(c)}
+                        className={`px-4 py-2 font-bold text-xs uppercase tracking-wider transition-colors ${category === c ? "bg-[#1B98E0] text-[#13293D]" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            <div className="mb-4">
-              <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Tipo de Trabalho</p>
-              <div className="flex flex-wrap gap-2">
-                {workTypes.map(w => (
-                  <button key={w} onClick={() => setWorkType(w)}
-                    className={`px-5 py-2.5 font-bold text-sm uppercase tracking-wider transition-colors ${workType === w ? "bg-[#247BA0] text-white" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
-                    {w}
-                  </button>
-                ))}
+                <div>
+                  <p className="text-white/40 text-sm uppercase font-bold tracking-widest mb-3">Tipo de Trabalho</p>
+                  <div className="flex flex-wrap gap-2">
+                    {workTypes.map(w => (
+                      <button key={w} onClick={() => setWorkType(w)}
+                        className={`px-5 py-2.5 font-bold text-sm uppercase tracking-wider transition-colors ${workType === w ? "bg-[#247BA0] text-white" : "bg-white/5 text-white/60 hover:text-white border border-white/10"}`}>
+                        {w}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
